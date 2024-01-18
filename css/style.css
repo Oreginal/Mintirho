@@ -233,7 +233,7 @@ a {
     .header_area .navbar .nav .nav-item {
       margin-right: 45px; }
       .header_area .navbar .nav .nav-item .nav-link {
-        font: 500 12px/80px "Roboto", sans-serif;
+        font: 500 15px/80px "Roboto", sans-serif;
         text-transform: uppercase;
         color: #000000;
         padding: 0px;
@@ -241,7 +241,7 @@ a {
         .header_area .navbar .nav .nav-item .nav-link:after {
           display: none; }
       .header_area .navbar .nav .nav-item:hover .nav-link, .header_area .navbar .nav .nav-item.active .nav-link {
-        color: #3face4; }
+        color: #c41010; }
       .header_area .navbar .nav .nav-item.submenu {
         position: relative; }
         .header_area .navbar .nav .nav-item.submenu ul {
@@ -437,7 +437,7 @@ a {
   .single_service:hover {
     cursor: pointer; }
     .single_service:hover h4 {
-      color: #3face4; }
+      color: #c41010; }
   @media (max-width: 991px) {
     .single_service {
       margin-bottom: 30px; } }
@@ -2435,6 +2435,24 @@ h6 {
     background: #3face4;
     color: #fff;
     border-color: #3face4; }
+
+/*---------------------------------------------------- */
+/*----------------------------------------------------*/
+/* Transitions css
+============================================================================================ */
+.hidden{
+  opacity: 0;
+  filter: blur(5px);
+  
+  transition: ease 2s;
+}
+
+.show{
+  opacity: 1;
+  filter: blur(0);
+
+
+}
 
 /* End Main Button Area css
 ============================================================================================ */

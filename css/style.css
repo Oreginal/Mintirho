@@ -404,6 +404,13 @@ a {
   .about_myself .activity .activity_box:hover {
     box-shadow: 0 8px 21px #dddddd;
     border: 1px solid transparent; }
+  .backOverview{
+    background-image: url('/img/overview-bg.jpg'); /* Replace 'your-image-url.jpg' with the actual path or URL of your image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-size: cover; /* Ensure the image covers the entire background */
+    background-position: center center;
+    width: 100%;
+  }
 
 /* About Us css End
 =========================================================================================== */
@@ -2444,7 +2451,7 @@ h6 {
   opacity: 0;
   filter: blur(5px);
   
-  transition: ease 2s;
+  transition: ease 1.5s;
 }
 
 .show{
@@ -2527,7 +2534,7 @@ h6 {
     .footer-area .footer-nav li a {
       color: #777777; }
       .footer-area .footer-nav li a:hover {
-        color: #3face4; }
+        color: #c41010; }
   .footer-area h6 {
     color: #fff;
     margin-bottom: 25px;

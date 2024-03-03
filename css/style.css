@@ -23,7 +23,7 @@ Table of Content:
 07/ about
 08/ team
 09/ project 
-10/ price 
+10/ price container hidden
 11/ team 
 12/ blog 
 13/ video  
@@ -49,6 +49,45 @@ Table of Content:
     .col {
       -ms-flex: 0 0 50%;
       flex: 0 0 50%; } }
+
+/*---------------------------------------------------- */
+/*----------------------------------------------------*/
+/*New Addtions */
+.bgImg{
+  background-image: url('/img/bgDoddle2.jpeg'); /* Replace 'your-image-url.jpg' with the actual path or URL of your image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  background-size: cover; /* Ensure the image covers the entire background */
+  background-position: center center;
+  width: 100%;
+}
+.boxHeading{
+
+}
+.outLined{
+  text-shadow:
+  -1px -1px 0 darkblue,  
+   1px -1px 0 darkblue,
+  -1px  1px 0 darkblue,
+   1px  1px 0 darkblue;
+}
+.outLined2{
+  text-shadow:
+  -1px -1px 0 Red,  
+   1px -1px 0 Red,
+  -1px  1px 0 Red,
+   1px  1px 0 Red;
+}
+.justifyPar {
+  text-align: justify;
+}
+.headColor{
+  color: rgb(0, 132, 255);
+  text-shadow:
+  -0px -1px 0 #000,  
+   0px -1px 0 #000,
+  -0px  1px 0 #000,
+   0px  1px 0 #000; /
+}
 
 /*---------------------------------------------------- */
 /*----------------------------------------------------*/
@@ -155,6 +194,7 @@ a {
 
 /*---------------------------------------------------- */
 /*----------------------------------------------------*/
+
 .top_menu {
   background: #fff;
   height: 40px;

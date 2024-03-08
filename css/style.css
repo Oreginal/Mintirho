@@ -53,6 +53,25 @@ Table of Content:
 /*---------------------------------------------------- */
 /*----------------------------------------------------*/
 /*New Addtions */
+.shopHeading{
+  color:#B01218;
+  text-shadow:
+  -1px -1px 0 #B01218,  
+   1px -1px 0 #B01218,
+  -1px  1px 0 #B01218,
+   1px  1px 0 #B01218;
+}
+.bordered-text2 {
+  border: 5px solid #1056E6; /* Adjust border width and color as needed */
+  padding: 10px; /* Optional: Add padding to create space between text and border */
+  display: inline-block; /* Make the container fit the content */
+}
+.bordered-text {
+  border: 5px solid #B81712; /* Adjust border width and color as needed */
+  padding: 10px; /* Optional: Add padding to create space between text and border */
+  display: inline-block; /* Make the container fit the content */
+}
+
 .bgImg{
   background-image: url('/img/bgDoddle2.jpeg'); /* Replace 'your-image-url.jpg' with the actual path or URL of your image */
   background-repeat: no-repeat; /* Prevent the image from repeating */
@@ -60,15 +79,15 @@ Table of Content:
   background-position: center center;
   width: 100%;
 }
-.boxHeading{
-
+.headingBlue{
+  color:1056E6;
 }
 .outLined{
   text-shadow:
-  -1px -1px 0 darkblue,  
-   1px -1px 0 darkblue,
-  -1px  1px 0 darkblue,
-   1px  1px 0 darkblue;
+  -1px -1px 0 #1056E6,  
+   1px -1px 0 #1056E6,
+  -1px  1px 0 #1056E6,
+   1px  1px 0 #1056E6;
 }
 .outLined2{
   text-shadow:
@@ -81,12 +100,12 @@ Table of Content:
   text-align: justify;
 }
 .headColor{
-  color: rgb(0, 132, 255);
+  color: #1056E6;
   text-shadow:
-  -0px -1px 0 #000,  
-   0px -1px 0 #000,
-  -0px  1px 0 #000,
-   0px  1px 0 #000; /
+  -0px -1px 0 #1056E6,  
+   0px -1px 0 #1056E6,
+  -0px  1px 0 #1056E6,
+   0px  1px 0 #1056E6; /
 }
 
 /*---------------------------------------------------- */

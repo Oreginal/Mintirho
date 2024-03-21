@@ -41,7 +41,7 @@ Table of Content:
 .col {
   -ms-flex: 0 0 20%;
   flex: 0 0 20%; }
-  @media (max-width: 480px) {
+  @media (max-width: 480px) {appointment-left
     .col {
       -ms-flex: 0 0 100% !important;
       flex: 0 0 100% !important; } }
@@ -53,6 +53,32 @@ Table of Content:
 /*---------------------------------------------------- */
 /*----------------------------------------------------*/
 /*New Addtions */
+.addtion{
+  font-size:100px;
+}
+#datepicker2{
+  color: #111111;
+}
+.boxHeading{
+  text-align: center;
+  color:#000;
+  text-shadow:
+  -2px -1px #000,  
+   1px -1px 0 #B01218,
+  -2px  1px 0 #B01218,
+   2px  1px 0 #B01218;
+}
+.headerstyle{
+  color:solid #B81712;
+}
+.headingBlue{
+  color:#000;
+  text-shadow:
+  -3px -1px 0 #000,  
+   1px -1px 0 #1056E6,
+  -2px  1px 0 #1056E6,
+  2px  1px 0 #1056E6; 
+}
 .shopHeading{
   color:#B01218;
   text-shadow:
@@ -61,13 +87,33 @@ Table of Content:
   -1px  1px 0 #B01218,
    1px  1px 0 #B01218;
 }
+.clientHeading{
+    color:#1056E6;
+  text-shadow:
+  -1px -1px 0 #1056E6,  
+   1px -1px 0 #1056E6,
+  -1px  1px 0 #1056E6,
+   1px  1px 0 #1056E6;
+}
+.greyText{
+  color:#111111;
+  font-weight: bolder;
+}
+.description{
+  color:#000;
+  font-weight: bolder;
+}
+.textB{
+  color:#B01218;
+  font-weight: bolder;
+}
 .bordered-text2 {
   border: 5px solid #1056E6; /* Adjust border width and color as needed */
   padding: 10px; /* Optional: Add padding to create space between text and border */
   display: inline-block; /* Make the container fit the content */
 }
 .bordered-text {
-  border: 5px solid #B81712; /* Adjust border width and color as needed */
+  border: 5px ; /* Adjust border width and color as needed */
   padding: 10px; /* Optional: Add padding to create space between text and border */
   display: inline-block; /* Make the container fit the content */
 }
@@ -79,19 +125,17 @@ Table of Content:
   background-position: center center;
   width: 100%;
 }
-.headingBlue{
-  color:1056E6;
-}
+
 .outLined{
   text-shadow:
-  -1px -1px 0 #1056E6,  
+  -4px -1px 0 #1056E6,  
    1px -1px 0 #1056E6,
   -1px  1px 0 #1056E6,
    1px  1px 0 #1056E6;
 }
 .outLined2{
   text-shadow:
-  -1px -1px 0 Red,  
+  -10px -1px 0 Red,  
    1px -1px 0 Red,
   -1px  1px 0 Red,
    1px  1px 0 Red;
@@ -434,8 +478,8 @@ a {
         font-weight: 500;
         font-size: 14px; }
         .home_banner_area .banner_inner .banner_content .white_bg_btn:hover {
-          background: #3face4;
-          border: 1px solid #3face4; }
+          background: #1056E6;
+          border: 1px solid #1056E6; }
 
 /*---------------------------------------------------- */
 /*----------------------------------------------------*/
@@ -445,6 +489,7 @@ a {
   margin-bottom: 40px; }
 .about_myself .about_box {
   background: #f9f9ff;
+  /* background:rgba(15, 98, 216, 0.2) */
   padding: 80px 120px 21px; }
 
 .about_myself .activity .activity_box {
@@ -465,7 +510,7 @@ a {
     box-shadow: 0 8px 21px #dddddd;
     border: 1px solid transparent; }
   .backOverview{
-    background-image: url('/img/overview-bg.jpg'); /* Replace 'your-image-url.jpg' with the actual path or URL of your image */
+    background-image: url('/img/wallpaper10.jpg'); /*Replace 'your-image-url.jpg' with the actual path or URL of your image */
     background-repeat: no-repeat; /* Prevent the image from repeating */
     background-size: cover; /* Ensure the image covers the entire background */
     background-position: center center;
@@ -524,7 +569,8 @@ a {
         align-items: center;
         justify-content: center;
         height: 70vh;
-        
+        color:#111111;
+        font-weight: bolder;
         
         
     }
@@ -663,8 +709,7 @@ a {
   background: #f9f9ff;
   position: relative;
   z-index: 5; }
-  .appointment-area .appointment-wrap {
-    border-bottom: 1px solid #eee; }
+
   .appointment-area .appointment-left h1 {
     margin-bottom: 20px; }
     @media (max-width: 991px) {
@@ -680,16 +725,15 @@ a {
     margin-top: 50px;
     padding-left: 0; }
     .appointment-area .appointment-left .time-list li {
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid #000;
       font-size: 14px;
       font-weight: 400;
-      color: #222222;
       margin-bottom: 20px;
       padding-bottom: 20px; }
   .appointment-area .appointment-right {
     margin: -20px 0;
-    background-color: white;
-    box-shadow: 0px 10px 20px 0px rgba(153, 153, 153, 0.1); }
+    background-color:rgba(15, 98, 216, 0.2); /*over here*/
+    box-shadow: 0px 10px 20px 0px rgba(15, 98, 216, 0.2); }
     @media (max-width: 767px) {
       .appointment-area .appointment-right {
         margin-top: 30px; } }
@@ -708,15 +752,23 @@ a {
         border-radius: 0px;
         padding: 0.675rem 0.75rem;
         font-size: 13px;
-        font-weight: 300; }
+        font-weight: 300; 
+        color:#111111;
+        font-weight: bolder;}
         .appointment-area .appointment-right .form-wrap .form-control:focus {
-          box-shadow: none; }
+          box-shadow: none;
+        color: #111111; 
+      font-weight: bolder;}
       .appointment-area .appointment-right .form-wrap .form-select .nice-select {
-        border: 1px solid #ced4da;
+        border: 1px solid ;
         margin-bottom: 10px;
-        background: #ffffff !important; }
+        background: #ffffff !important; 
+        font-weight: bolder;
+        color:grey;
+        }
+        
       .appointment-area .appointment-right .form-wrap .form-select .nice-select .list {
-        border: 1px solid #3face4; }
+        border: 1px solid; }
         .appointment-area .appointment-right .form-wrap .form-select .nice-select .list .option {
           padding-left: 15px; }
           .appointment-area .appointment-right .form-wrap .form-select .nice-select .list .option:hover {
@@ -728,7 +780,7 @@ a {
         margin-top: 5px; }
       .appointment-area .appointment-right .form-wrap textarea {
         width: 100%;
-        border: 1px solid #ced4da;
+        border: 1px solid ;
         margin-bottom: 20px;
         padding: 0.675rem 0.75rem;
         font-size: 13px;
@@ -1258,7 +1310,8 @@ a {
       .comments-area .comment-list .single-comment h5 {
         font-size: 12px; }
       .comments-area .comment-list .single-comment .date {
-        font-size: 11px; }
+        font-size: 11px; 
+     }
       .comments-area .comment-list .single-comment .comment {
         font-size: 10px; } }
   .comments-area .thumb {
@@ -2587,14 +2640,15 @@ h6 {
 .main_btn {
   position: relative;
   display: inline-block;
-  background: #3face4;
+  background: #1056E6;
   padding: 0px 40px;
   color: #fff;
   font-family: "Roboto", sans-serif;
   font-size: 13px;
   font-weight: 500;
   line-height: 48px;
-  border: 1px solid #3face4;
+  border: 1px solid #1056E6;
+  border-radius: 20%;
   outline: none !important;
   box-shadow: none !important;
   text-align: center;
@@ -2604,8 +2658,8 @@ h6 {
   text-transform: capitalize; }
   .main_btn:hover {
     background: transparent;
-    color: #3face4;
-    border: 1px solid #3face4; }
+    color: #1056E6;
+    border: 20px solid #3face4; }
 
 .submit_btn {
   display: inline-block;

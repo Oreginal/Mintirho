@@ -7,7 +7,7 @@ is the file you need to edit to change the look of the
 theme.
 ---------------------------------------------------- */
 /*=====================================================================
-@Template Name: Builder Construction 
+@Template Name: Builder Construction
 @Author: Spondon IT
 @Developed By: Naim Lasker
 
@@ -22,14 +22,14 @@ Table of Content:
 06/ breadcrumb
 07/ about
 08/ team
-09/ project 
+09/ project
 10/ price container hidden
-11/ team 
-12/ blog 
-13/ video  
-14/ features  
-15/ career  
-16/ contact 
+11/ team
+12/ blog
+13/ video
+14/ features
+15/ career
+16/ contact
 17/ footer
 
 =====================================================================*/
@@ -52,6 +52,20 @@ Table of Content:
 
 /*---------------------------------------------------- */
 /*----------------------------------------------------*/
+.imagesMoveLogo{
+  /* margin-left: 50px;
+  width:850px; /* Adjust the width to change the ratio */
+  /* height:740px; */
+  transform: scale(2);
+  margin-top: 100px;
+  margin-left:100px;
+}
+.imagesMove{
+
+  /* margin-left: 250px;
+  width: 350%; /* Adjust the width to change the ratio */
+  /* height: 100%; */
+}
 /*New Addtions */
 .addtion{
   font-size:100px;
@@ -63,10 +77,11 @@ Table of Content:
   text-align: center;
   color:#000;
   text-shadow:
-  -2px -1px #000,  
+  -2px -1px #000,
    1px -1px 0 #B01218,
   -2px  1px 0 #B01218,
    2px  1px 0 #B01218;
+   padding-right: 30%;
 }
 .headerstyle{
   color:solid #B81712;
@@ -74,15 +89,15 @@ Table of Content:
 .headingBlue{
   color:#000;
   text-shadow:
-  -3px -1px 0 #000,  
+  -3px -1px 0 #000,
    1px -1px 0 #1056E6,
   -2px  1px 0 #1056E6,
-  2px  1px 0 #1056E6; 
+  2px  1px 0 #1056E6;
 }
 .shopHeading{
   color:#B01218;
   text-shadow:
-  -1px -1px 0 #B01218,  
+  -1px -1px 0 #B01218,
    1px -1px 0 #B01218,
   -1px  1px 0 #B01218,
    1px  1px 0 #B01218;
@@ -90,7 +105,7 @@ Table of Content:
 .clientHeading{
     color:#1056E6;
   text-shadow:
-  -1px -1px 0 #1056E6,  
+  -1px -1px 0 #1056E6,
    1px -1px 0 #1056E6,
   -1px  1px 0 #1056E6,
    1px  1px 0 #1056E6;
@@ -128,28 +143,29 @@ Table of Content:
 
 .outLined{
   text-shadow:
-  -4px -1px 0 #1056E6,  
+  -4px -1px 0 #1056E6,
    1px -1px 0 #1056E6,
   -1px  1px 0 #1056E6,
    1px  1px 0 #1056E6;
 }
 .outLined2{
   text-shadow:
-  -10px -1px 0 Red,  
+  -10px -1px 0 Red,
    1px -1px 0 Red,
   -1px  1px 0 Red,
    1px  1px 0 Red;
 }
 .justifyPar {
   text-align: justify;
+  font-size: 100%;
 }
 .headColor{
   color: #1056E6;
   text-shadow:
-  -0px -1px 0 #1056E6,  
+  -0px -1px 0 #1056E6,
    0px -1px 0 #1056E6,
   -0px  1px 0 #1056E6,
-   0px  1px 0 #1056E6; /
+   0px  1px 0 #1056E6;
 }
 
 /*---------------------------------------------------- */
@@ -257,7 +273,9 @@ a {
 
 /*---------------------------------------------------- */
 /*----------------------------------------------------*/
-
+.over-viewMove{
+ padding-left: 10px;
+}
 .top_menu {
   background: #fff;
   height: 40px;
@@ -486,12 +504,18 @@ a {
 /* Start About Myself css
 =========================================================================================== */
 .about_myself .section-title-wrap {
-  margin-bottom: 40px; }
+  /* margin-bottom: 40px; */
+  }
 .about_myself .about_box {
-  background: #f9f9ff;
+  color:#000;
+  font-weight: bold;
+  font-size:larger;
+  word-spacing: 2px;
+  /* background: #042444; */
   /* background:rgba(15, 98, 216, 0.2) */
-  padding: 80px 120px 21px; }
-
+  /* padding: 80px 120px 21px;  */
+  background-image:url('/img/wallpaper2.jpg');
+}
 .about_myself .activity .activity_box {
   background: #ffffff;
   padding: 20px;
@@ -510,13 +534,32 @@ a {
     box-shadow: 0 8px 21px #dddddd;
     border: 1px solid transparent; }
   .backOverview{
-    background-image: url('/img/wallpaper10.jpg'); /*Replace 'your-image-url.jpg' with the actual path or URL of your image */
+    /* background-image: url('/img/wallpaper6.jpg'); */
+    /*background-image: url('/img/wallpaper6.jpg'); /*Replace 'your-image-url.jpg' with the actual path or URL of your image */
     background-repeat: no-repeat; /* Prevent the image from repeating */
     background-size: cover; /* Ensure the image covers the entire background */
     background-position: center center;
     width: 100%;
+    height:100%;
   }
-
+  .image-overlay{
+    background-image: url('/img/wallpaper6.jpeg');
+    width:100%;
+    height:100%;
+    /* background-color: rgba(138,179,216); */
+    display:flex ;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.8;
+  }
+.overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
 /* About Us css End
 =========================================================================================== */
 /*Start Feedback Area
@@ -557,11 +600,11 @@ a {
         text-align: center;
       }
       area:hover {
-        color: red; 
+        color: red;
       }
 
       .services_box {
-        
+
         /* background-color: #DCDCDC; Background color */
         padding: 50px; /* Add padding for better appearance */
         margin: 0;
@@ -571,8 +614,8 @@ a {
         height: 70vh;
         color:#111111;
         font-weight: bolder;
-        
-        
+
+
     }
 
     .section-title-wrap {
@@ -606,14 +649,14 @@ a {
       font-size: 16px;
       overflow: hidden;
       transition: transform 0.3s, background-color 0.3s;
-      
+
   }
 
   .box:hover {
     cursor: pointer;
     background-color: #c41010;
     color: white;
-    
+
 }
 
   .box-1 {
@@ -752,21 +795,21 @@ a {
         border-radius: 0px;
         padding: 0.675rem 0.75rem;
         font-size: 13px;
-        font-weight: 300; 
+        font-weight: 300;
         color:#111111;
         font-weight: bolder;}
         .appointment-area .appointment-right .form-wrap .form-control:focus {
           box-shadow: none;
-        color: #111111; 
+        color: #111111;
       font-weight: bolder;}
       .appointment-area .appointment-right .form-wrap .form-select .nice-select {
         border: 1px solid ;
         margin-bottom: 10px;
-        background: #ffffff !important; 
+        background: #ffffff !important;
         font-weight: bolder;
         color:grey;
         }
-        
+
       .appointment-area .appointment-right .form-wrap .form-select .nice-select .list {
         border: 1px solid; }
         .appointment-area .appointment-right .form-wrap .form-select .nice-select .list .option {
@@ -1310,7 +1353,7 @@ a {
       .comments-area .comment-list .single-comment h5 {
         font-size: 12px; }
       .comments-area .comment-list .single-comment .date {
-        font-size: 11px; 
+        font-size: 11px;
      }
       .comments-area .comment-list .single-comment .comment {
         font-size: 10px; } }
@@ -2710,7 +2753,7 @@ h6 {
 .hidden{
   opacity: 0;
   filter: blur(5px);
-  
+
   transition: ease 1.5s;
 }
 

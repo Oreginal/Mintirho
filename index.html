@@ -20,6 +20,17 @@
 
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/responsive.css">
+<script src="js/book-appointment.js"></script>
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init({
+        publicKey: "0XDAR1PSWPgZsDBh6",
+      });
+   })();
+</script>
 <script nonce="46824026-9d3b-444a-be5d-2b16cc33c596">try { (function(w,d){!function(o,p,q,r){o[q]=o[q]||{};o[q].executed=[];o.zaraz={deferred:[],listeners:[]};o.zaraz.q=[];o.zaraz._f=function(s){return async function(){var t=Array.prototype.slice.call(arguments);o.zaraz.q.push({m:s,a:t})}};for(const u of["track","set","debug"])o.zaraz[u]=o.zaraz._f(u);o.zaraz.init=()=>{var v=p.getElementsByTagName(r)[0],w=p.createElement(r),x=p.getElementsByTagName("title")[0];x&&(o[q].t=p.getElementsByTagName("title")[0].text);o[q].x=Math.random();o[q].w=o.screen.width;o[q].h=o.screen.height;o[q].j=o.innerHeight;o[q].e=o.innerWidth;o[q].l=o.location.href;o[q].r=p.referrer;o[q].k=o.screen.colorDepth;o[q].n=p.characterSet;o[q].o=(new Date).getTimezoneOffset();if(o.dataLayer)for(const B of Object.entries(Object.entries(dataLayer).reduce(((C,D)=>({...C[1],...D[1]})),{})))zaraz.set(B[0],B[1],{scope:"page"});o[q].q=[];for(;o.zaraz.q.length;){const E=o.zaraz.q.shift();o[q].q.push(E)}w.defer=!0;for(const F of[localStorage,sessionStorage])Object.keys(F||{}).filter((H=>H.startsWith("_zaraz_"))).forEach((G=>{try{o[q]["z_"+G.slice(7)]=JSON.parse(F.getItem(G))}catch{o[q]["z_"+G.slice(7)]=F.getItem(G)}}));w.referrerPolicy="origin";w.src="../../cdn-cgi/zaraz/sd0d9.js?z="+btoa(encodeURIComponent(JSON.stringify(o[q])));v.parentNode.insertBefore(w,v)};["complete","interactive"].includes(p.readyState)?zaraz.init():o.addEventListener("DOMContentLoaded",zaraz.init)}(w,d,"zarazData","script");})(window,document) } catch (err) {
       console.error('Failed to run Cloudflare Zaraz: ', err)
       fetch('/cdn-cgi/zaraz/t', {
@@ -116,7 +127,7 @@
 <div class="col-lg-12">
 <h1>Welcome to Mintirho Healthcare and Consulting Services</h1>
 <p></p>
-<a class="main_btn mr-10" href="#">Book Appointment</a>
+<a class="main_btn mr-10" href="contact.html">Book Appointment</a>
 </div>
 </div>
 </div>
@@ -197,48 +208,39 @@
 <div class="row justify-content-between align-items-center appointment-wrap">
 <div class="col-lg-5 col-md-6 appointment-left">
 <h1>
-Operating Hours
+  IV Lounge
 </h1>
-<p>
-We would like to inform our valued clientele of our established operating hours
-</p>
-<ul class="time-list">
-<li class="d-flex justify-content-between">
-<span>Monday-Friday</span>
-<span>08.00 am - 10.00 pm</span>
-</li>
-<li class="d-flex justify-content-between">
-<span>Saturday</span>
-<span>08.00 am - 10.00 pm</span>
-</li>
-<li class="d-flex justify-content-between">
-<span>Sunday</span>
-<span>08.00 am - 10.00 pm</span>
-</li>
-</ul>
+
+<div class="IVimage">
+        <a href="./Drip Brochure.pdf" target="_blank">
+            <img src="./img/IV/IV.png" alt="IV Image" width="90%" height="auto">
+        </a>
+    </div>
+
 </div>
 <div class="col-lg-6 col-md-6 pt-60 pb-60">
 <div class="appointment-right">
-<form class="form-wrap" action="#">
-<h3 class="pb-20 text-center mb-20">Book an Appointment</h3>
-<input type="text" class="form-control" name="name" placeholder="Patient Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Patient Name'">
-<input type="text" class="form-control" name="phone" placeholder="Phone " onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone'">
-<input type="email" class="form-control" name="email" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'">
-<input id="datepicker1" name="dop" class="dates form-control" placeholder="Date of Birth" type="text">
-<div class="form-select" id="service-select">
-<select>
-<option data-display>Service</option>
-<option value="1">Type One</option>
-<option value="2">Type Two</option>
-<option value="3">Type Three</option>
-<option value="4">Type Four</option>
-</select>
-</div>
-<input id="datepicker2" class="dates form-control" placeholder="Date" type="date">
-<textarea name="messege" class rows="5" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"></textarea>
-<div class="text-center confirm_btn_box">
-<button class="main_btn text-uppercase">Confirm Booking</button>
-</div>
+  <form class="form-wrap" id="booking-form">
+    <h3 class="pb-20 text-center mb-20">Book an Appointment</h3>
+    <input type="text" class="form-control" name="name" id="name" placeholder="Patient Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Patient Name'">
+    <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone'">
+    <input type="email" class="form-control" name="email" id="email" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'">
+    <input id="datepicker1" name="dob" class="dates form-control" placeholder="Date of Birth" type="text">
+    <div class="form-select" id="service-select">
+        <select id="therapy-drips">
+            <option data-display>Therapy Drips</option>
+            <option value="Energy">Energy</option>
+            <option value="Anti - Inflammatory">Anti - Inflammatory</option>
+            <option value="Colds & Flu">Colds & Flu</option>
+            <option value="JetFuel">JetFuel</option>
+            <option value="More">More</option>
+        </select>
+    </div>
+    <input id="datepicker2" type="date" class="dates form-control" placeholder="Date">
+    <textarea name="message" class="form-control" rows="5" placeholder="Message" id="message" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Message'"></textarea>
+    <div class="text-center confirm_btn_box">
+        <button type="submit" class="main_btn text-uppercase">Confirm Booking</button>
+    </div>
 </form>
 </div>
 </div>
@@ -318,45 +320,23 @@ We would like to inform our valued clientele of our established operating hours
 <div class="feedback_contents justify-content-center align-items-center">
 <div class="active-review-carusel owl-carousel">
 <div class="row">
-
+<div class="col-lg-6">
+<img src="img/feedback/K.png" height="450">
+</div>
 <div class="col-lg-6">
 <div class="single-feedback-carusel">
 <div class="d-flex flex-row">
-<h4 class>Fannie Rowe (1)</h4>
+<h4 class>Khumbuzile Mbuqe</h4>
 <div class="star">
 <span class="fa fa-star checked"></span>
 <span class="fa fa-star checked"></span>
 <span class="fa fa-star checked"></span>
 <span class="fa fa-star checked"></span>
-<span class="fa fa-star"></span>
+<span class="fa fa-star checked"></span>
 </div>
 </div>
 <p class>
-Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker. Here you can
-find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
-</p>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-lg-6">
-<img src="img/feedback-bg.jpeg" alt>
-</div>
-<div class="col-lg-6">
-<div class="single-feedback-carusel">
-<div class="d-flex flex-row">
-<h4 class>Fannie Rowe</h4>
-<div class="star">
-<span class="fa fa-star checked"></span>
-<span class="fa fa-star checked"></span>
-<span class="fa fa-star checked"></span>
-<span class="fa fa-star checked"></span>
-<span class="fa fa-star"></span>
-</div>
-</div>
-<p class>
-Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker. Here you can
-find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
+  The service was exceptional! I would definitely recommend this facility to my family and friends!
 </p>
 </div>
 </div>
@@ -365,42 +345,41 @@ find the best computer accessory for your laptop, monitor, printer, scanner, spe
 <div class="col-lg-6">
 <div class="single-feedback-carusel">
 <div class="d-flex flex-row">
-<h4 class>Fannie Rowe</h4>
+<h4 class>Thami Matebula</h4>
 <div class="star">
 <span class="fa fa-star checked"></span>
 <span class="fa fa-star checked"></span>
 <span class="fa fa-star checked"></span>
 <span class="fa fa-star checked"></span>
-<span class="fa fa-star"></span>
+<span class="fa fa-star checked"></span>
 </div>
 </div>
 <p class>
-Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker. Here you can
-find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
+  What a great service. Medicals for 10 employees completed in  2 hours.
 </p>
 </div>
+</div>
+<div class="col-lg-6">
+<img src="img/feedback/T.png" height="450" alt>
 </div>
 </div>
 <div class="row">
   <div class="col-lg-6">
-<img src="img/feedback-bg.jpeg" alt>
+<img src="img/feedback/A.png" height="450" alt>
 </div>
 <div class="col-lg-6">
 <div class="single-feedback-carusel">
 <div class="d-flex flex-row">
-<h4 class>Fannie Rowe</h4>
+<h4 class>Ashiel Mutambisi</h4>
 <div class="star">
 <span class="fa fa-star checked"></span>
 <span class="fa fa-star checked"></span>
 <span class="fa fa-star checked"></span>
 <span class="fa fa-star checked"></span>
-<span class="fa fa-star"></span>
+<span class="fa fa-star checked"></span>
 </div>
 </div>
-<p class>
-Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker. Here you can
-find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
-</p>
+
 </div>
 </div>
 </div>
@@ -442,30 +421,12 @@ find the best computer accessory for your laptop, monitor, printer, scanner, spe
 </div>
 </div>
 <div class="col-lg-6  col-md-12">
-<div class="single-footer-widget newsletter">
-<h6>Newsletter</h6>
-<p>You can trust us. we only send promo offers, not a single spam.</p>
-<div id="mc_embed_signup">
-<form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get" class="form-inline">
-<div class="form-group row">
-<div class="col-lg-7 col-md-6 col-sm-12">
-<input name="EMAIL" placeholder="Your Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address '" required type="email">
-</div>
-<div class="col-lg-5 col-md-12">
-<button class="nw-btn main_btn circle">get started
-<span class="lnr lnr-arrow-right"></span>
-</button>
-</div>
-</div>
-<div class="info"></div>
-</form>
-</div>
-</div>
+  <img src="img/logo2.png" alt>
 </div>
 </div>
 <div class="row footer-bottom d-flex justify-content-between">
 <p class="col-lg-8 col-sm-12 footer-text m-0">
-Copyright &copy;<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com/" target="_blank">Colorlib</a>
+Copyright &copy;<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com/" target="_blank">Colorlib</a> editted by Katore Solutions
 
 </p>
 <div class="col-lg-4 col-sm-12 footer-social">

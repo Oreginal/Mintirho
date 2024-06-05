@@ -1,0 +1,22 @@
+HTTrack3.49-2+htsswf+htsjava launched on Thu, 18 Jan 2024 14:06:19 at https://preview.colorlib.com/theme/hospice/index.html +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" https://preview.colorlib.com/theme/hospice/index.html -O1 "C:\Users\Admin\Documents\Client\Mintirho" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+14:06:51	Error: 	"Bad Request" (400) at link https://preview.colorlib.com/cdn-cgi/zaraz/s.js?z= (from https://preview.colorlib.com/theme/hospice/index.html)
+14:06:51	Error: 	"Not Found" (404) at link https://preview.colorlib.com/theme/hospice/login.html (from https://preview.colorlib.com/theme/hospice/index.html)
+14:07:16	Error: 	"Not Found" (404) at link https://preview.colorlib.com/theme/hospice/vendors/owl-carousel/owl.video.play.png (from https://preview.colorlib.com/theme/hospice/vendors/owl-carousel/owl.carousel.min.css)
+14:07:16	Error: 	"Not Found" (404) at link https://preview.colorlib.com/theme/hospice/vendors/jquery-ui/images/ui-icons_444444_256x240.png (from https://preview.colorlib.com/theme/hospice/vendors/jquery-ui/jquery-ui.css)
+14:07:16	Error: 	"Not Found" (404) at link https://preview.colorlib.com/theme/hospice/vendors/jquery-ui/images/ui-icons_555555_256x240.png (from https://preview.colorlib.com/theme/hospice/vendors/jquery-ui/jquery-ui.css)
+14:07:16	Error: 	"Not Found" (404) at link https://preview.colorlib.com/theme/hospice/vendors/jquery-ui/images/ui-icons_ffffff_256x240.png (from https://preview.colorlib.com/theme/hospice/vendors/jquery-ui/jquery-ui.css)
+14:07:16	Error: 	"Not Found" (404) at link https://preview.colorlib.com/theme/hospice/vendors/jquery-ui/images/ui-icons_777620_256x240.png (from https://preview.colorlib.com/theme/hospice/vendors/jquery-ui/jquery-ui.css)
+14:07:16	Error: 	"Not Found" (404) at link https://preview.colorlib.com/theme/hospice/vendors/jquery-ui/images/ui-icons_cc0000_256x240.png (from https://preview.colorlib.com/theme/hospice/vendors/jquery-ui/jquery-ui.css)
+14:07:16	Error: 	"Not Found" (404) at link https://preview.colorlib.com/theme/hospice/vendors/jquery-ui/images/ui-icons_777777_256x240.png (from https://preview.colorlib.com/theme/hospice/vendors/jquery-ui/jquery-ui.css)
+14:07:16	Error: 	"Not Found" (404) at link https://preview.colorlib.com/theme/hospice/js/theme.js (from https://preview.colorlib.com/theme/hospice/blog.html)
+14:07:16	Error: 	"Not Found" (404) at link https://preview.colorlib.com/theme/hospice/blog-details.html (from https://preview.colorlib.com/theme/hospice/single-blog.html)
+
+HTTrack Website Copier/3.49-2 mirror complete in 57 seconds : 122 links scanned, 110 files written (6332644 bytes overall), 110 files updated [4921581 bytes received at 86343 bytes/sec], 2301834 bytes transferred using HTTP compression in 53 files, ratio 34%, 20.3 requests per connection
+(11 errors, 0 warnings, 0 messages)

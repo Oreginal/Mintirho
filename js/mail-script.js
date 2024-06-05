@@ -1,31 +1,28 @@
-    // -------   Mail Send ajax
+function sendMail() {
+    // Prevent form submission
+    event.preventDefault();
 
-     $(document).ready(function() {
-        var form = $('#myForm'); // contact form
-        var submit = $('.submit-btn'); // submit button
-        var alert = $('.alert-msg'); // alert div for show alert message
+    // Collect form data
+    let parms = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        subject: document.getElementById("subject").value,
+        message: document.getElementById("message").value,
+    };
 
-        // form submit event
-        form.on('submit', function(e) {
-            e.preventDefault(); // prevent default form submit
+    // Validate form data
+    if (!parms.name || !parms.email || !parms.subject || !parms.message) {
+        alert("Please fill out all fields.");
+        return;
+    }
 
-            $.ajax({
-                url: 'mail.php', // form action url
-                type: 'POST', // form submit method get/post
-                dataType: 'html', // request type html/json/xml
-                data: form.serialize(), // serialize form data
-                beforeSend: function() {
-                    alert.fadeOut();
-                    submit.html('Sending....'); // change submit button text
-                },
-                success: function(data) {
-                    alert.html(data).fadeIn(); // fade in response data
-                    form.trigger('reset'); // reset form
-                    submit.attr("style", "display: none !important");; // reset submit button text
-                },
-                error: function(e) {
-                    console.log(e)
-                }
-            });
+    // Send email
+    emailjs.send("service_de8t36s", "template_rrpoqib", parms)
+        .then(function(response) {
+            console.log("SUCCESS!", response.status, response.text);
+            alert("Email Sent");
+        }, function(error) {
+            console.error("FAILED...", error);
+            alert("Email Failed to Send: " + error.text);
         });
-    });
+}

@@ -406,7 +406,7 @@ a {
     box-shadow: 0 8px 21px #dddddd;
     border: 1px solid transparent; }
   .backOverview{
-    background-image: url('/img/overview-bg.jpg'); /* Replace 'your-image-url.jpg' with the actual path or URL of your image */
+    background-image: url('/img/banner/overview-bg.jpg'); /* Replace 'your-image-url.jpg' with the actual path or URL of your image */
     background-repeat: no-repeat; /* Prevent the image from repeating */
     background-size: cover; /* Ensure the image covers the entire background */
     background-position: center center;

@@ -432,6 +432,38 @@ a {
 =========================================================================================== */
 /* Start Our Service Area
 =========================================================================================== */
+
+/* Add this CSS to your existing stylesheet or create a new one */
+.sbg {
+  background-color: white; /* Light grey background color */
+  margin-bottom: 20px;
+  border: 1px solid rgb(167, 50, 50);
+  width: 100px;
+
+}
+.service {
+  background-color: #d4e8f3; /* Light grey background color */
+
+}
+
+.service .section-top-border {
+  position: relative;
+  top: 0;
+  transition: top 0.3s ease-in-out;
+}
+
+.service .section-top-border:hover {
+  top: -10px; /* Adjust the lifting effect */
+}
+
+.service .section-top-border:hover img {
+  transform: scale(1.05); /* Optional: increase image size on hover */
+}
+
+.service .section-top-border img {
+  transition: transform 0.3s ease-in-out; /* Optional: add smooth transition for image scaling */
+}
+
 .single_service {
   text-align: center; }
   .single_service .lnr {

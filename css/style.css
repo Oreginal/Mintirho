@@ -1391,6 +1391,24 @@ a {
   margin-top: 20px;
   cursor: pointer; }
 
+  .socialMedia a{
+    padding-right: 30px;
+    font-size: 24px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .socialMedia a:hover i {
+    color: rgb(148, 5, 5);
+    font-size: larger;
+    transition: color 0.3s ease;
+}
+
+.socialMedia i {
+    font-size: 24px; /* Adjust the size as needed */
+    margin: 0 10px;  /* Add some spacing between icons */
+}
+
 /* Contact Success and error Area css
 ============================================================================================ */
 .modal-message .modal-dialog {

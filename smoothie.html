@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedal & Blend - Smoothie Bike Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3face4;
+            --accent-color: #c41010;
+            --bg-color: #f9f9ff;
+            --text-light: #777777;
+            --text-dark: #000000;
+            --secondary-color: #4A7C59;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .font-display {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Aurora Background Effect */
+        .aurora-bg {
+            background: linear-gradient(45deg, 
+                rgba(63, 172, 228, 0.1) 0%, 
+                rgba(74, 124, 89, 0.1) 25%, 
+                rgba(196, 16, 16, 0.05) 50%, 
+                rgba(63, 172, 228, 0.1) 75%, 
+                rgba(74, 124, 89, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: auroraFlow 15s ease-in-out infinite;
+        }
+
+        @keyframes auroraFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        /* WhatsApp Button Styles */
+        .whatsapp-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(63, 172, 228, 0.3);
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(63, 172, 228, 0.4);
+            background: #2a9bd1;
+        }
+
+        /* Flavor Wheel Styles */
+        .flavor-wheel {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            position: relative;
+            background: conic-gradient(
+                var(--primary-color) 0deg 45deg,
+                var(--secondary-color) 45deg 90deg,
+                #ff6b6b 90deg 135deg,
+                #4ecdc4 135deg 180deg,
+                var(--accent-color) 180deg 225deg,
+                #95e1d3 225deg 270deg,
+                #f38ba8 270deg 315deg,
+                #a8e6cf 315deg 360deg
+            );
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .flavor-wheel:hover {
+            transform: scale(1.05);
+        }
+
+        .flavor-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Benefit Cards */
+        .benefit-card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-8px) rotateX(5deg);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Pedal Power Counter */
+        .power-counter {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 20px;
+            padding: 24px;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .power-counter:hover {
+            transform: scale(1.02);
+        }
+
+        .power-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+
+        .power-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color), #ffeb3b);
+            width: 0%;
+            transition: width 2s ease;
+            border-radius: 10px;
+        }
+
+        /* Review Cards */
+        .review-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin: 0 12px;
+            min-height: 280px;
+        }
+
+        .star-rating {
+            color: #ffc107;
+            font-size: 20px;
+            margin: 12px 0;
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Floating Animation */
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .flavor-wheel {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .flavor-center {
+                width: 100px;
+                height: 100px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body class="aurora-bg">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="font-display font-bold text-xl text-primary-color" style="color: var(--primary-color);">
+                    🚴‍♂️ Pedal & Blend
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-primary-color transition-colors" style="--primary-color: var(--primary-color);">Home</a>
+                    <a href="#how-it-works" class="text-gray-700 hover:text-primary-color transition-colors">How It Works</a>
+                    <a href="#benefits" class="text-gray-700 hover:text-primary-color transition-colors">Benefits</a>
+                    <a href="#reviews" class="text-gray-700 hover:text-primary-color transition-colors">Reviews</a>
+                    <a href="#contact" class="text-gray-700 hover:text-primary-color transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-16 px-4">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+            <div class="text-center lg:text-left reveal">
+                <h1 class="font-display font-bold text-4xl lg:text-6xl mb-6 leading-tight">
+                    <img src="resources/logo_rmbg.png" alt="Logo" class="mx-auto mb-4 w-80 h-auto">
+
+                    <br> 
+                    <span class="text-gray-700"> Pedal And Blend Your Own!</span>
+                </h1>
+                
+                <div class="text-xl text-gray-600 mb-8 h-16">
+                    <span id="typed-tagline"></span>
+                </div>
+                
+                <!-- <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                    Transform your energy into delicious, fresh smoothies! Our innovative smoothie bikes let you blend 
+                    healthy drinks using your own pedal power. It's fitness, nutrition, and fun all in one amazing experience.
+                </p> -->
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="https://wa.me/0000000000" class="whatsapp-btn">
+                        <span>📱</span>
+                        Enquire for Pricing
+                    </a>
+                    <a href="#how-it-works" class="px-8 py-4 border-2 border-primary-color text-primary-color rounded-full font-semibold hover:bg-primary-color hover:text-white transition-all" style="--primary-color: var(--primary-color);">
+                        How It Works
+                    </a>
+                </div>
+            </div>
+            
+            <div class="flex flex-col items-center reveal">
+                <div class="floating mt-8">
+                    <img src="bike.jpg" alt="Smoothie Bike Experience" class="w-full max-w-md mx-auto rounded-3xl shadow-2xl">
+                </div>              
+                
+                <!-- Interactive Flavor Wheel -->
+                <div class="mt-8">
+                    <h3 class="font-display font-semibold text-xl mb-4 text-center">Choose Your Flavor</h3>
+                    <div class="flavor-wheel mx-auto" id="flavorWheel">
+                        <div class="flavor-center">
+                            <div class="text-center">
+                                <div class="text-2xl mb-1">🍓</div>
+                                <div class="text-sm font-semibold" id="selectedFlavor">Berry Blast</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-center text-sm text-gray-600 mt-4">Click to explore flavors!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display font-bold text-4xl lg:text-5xl mb-6">
+                    How It <span class="text-primary-color" style="color: var(--primary-color);">Works</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Three simple steps to create your perfect smoothie while getting a fun workout!
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="text-center reveal">
+                    <div class="w-20 h-20 bg-primary-color rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6" style="background-color: var(--primary-color);">1</div>
+                    <h3 class="font-display font-semibold text-2xl mb-4">Choose Your Fruits</h3>
+                    <p class="text-gray-600">Select from our fresh ingredients: berries, bananas, spinach, and more!</p>
+                </div>
+                
+                <div class="text-center reveal">
+                    <div class="w-20 h-20 bg-secondary-color rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6" style="background-color: var(--secondary-color);">2</div>
+                    <h3 class="font-display font-semibold text-2xl mb-4">Pedal to Blend</h3>
+                    <p class="text-gray-600">Start pedaling and watch your ingredients transform into a smooth, delicious drink!</p>
+                </div>
+                
+                <div class="text-center reveal">
+                    <div class="w-20 h-20 bg-accent-color rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6" style="background-color: var(--accent-color);">3</div>
+                    <h3 class="font-display font-semibold text-2xl mb-4">Enjoy & Refresh</h3>
+                    <p class="text-gray-600">Sip your fresh creation and feel the energy boost from your workout!</p>
+                </div>
+            </div>
+            
+            <!-- Interactive Pedal Power Demo -->
+            <div class="max-w-2xl mx-auto reveal">
+                <div class="power-counter" id="powerCounter">
+                    <h3 class="font-display font-semibold text-2xl mb-4">🚴‍♂️ Try the Pedal Power!</h3>
+                    <p class="mb-4">Click below to see how pedaling creates blending energy</p>
+                    <div class="power-bar">
+                        <div class="power-fill" id="powerFill"></div>
+                    </div>
+                    <div class="text-3xl font-bold" id="powerPercentage">0%</div>
+                    <p class="text-sm mt-2">Energy Level</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display font-bold text-4xl lg:text-5xl mb-6">
+                    Amazing <span class="text-primary-color" style="color: var(--primary-color);">Benefits</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Discover why everyone loves our smoothie bike experience!
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="benefit-card reveal">
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h3 class="font-display font-semibold text-xl mb-3">Energy Boost</h3>
+                    <p class="text-gray-600">Get an instant energy boost from both exercise and fresh nutrition. Perfect for starting your day!</p>
+                    <div class="mt-4 text-sm text-primary-color font-semibold" style="color: var(--primary-color);">+200% Energy</div>
+                </div>
+                
+                <div class="benefit-card reveal">
+                    <div class="text-4xl mb-4">🥬</div>
+                    <h3 class="font-display font-semibold text-xl mb-3">Fresh Nutrition</h3>
+                    <p class="text-gray-600">Enjoy the freshest smoothies made from premium ingredients. No preservatives, just pure goodness!</p>
+                    <div class="mt-4 text-sm text-secondary-color font-semibold" style="color: var(--secondary-color);">100% Fresh</div>
+                </div>
+                
+                <div class="benefit-card reveal">
+                    <div class="text-4xl mb-4">🎉</div>
+                    <h3 class="font-display font-semibold text-xl mb-3">Fun Exercise</h3>
+                    <p class="text-gray-600">Turn your workout into a party! Pedaling has never been this delicious and entertaining.</p>
+                    <div class="mt-4 text-sm text-accent-color font-semibold" style="color: var(--accent-color);">Super Fun!</div>
+                </div>
+                
+                <div class="benefit-card reveal">
+                    <div class="text-4xl mb-4">✨</div>
+                    <h3 class="font-display font-semibold text-xl mb-3">Memorable Experience</h3>
+                    <p class="text-gray-600">Create unforgettable memories with friends and family. It's not just a drink, it's an adventure!</p>
+                    <div class="mt-4 text-sm text-primary-color font-semibold" style="color: var(--primary-color);">Unforgettable</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display font-bold text-4xl lg:text-5xl mb-6">
+                    What People <span class="text-primary-color" style="color: var(--primary-color);">Say</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Don't just take our word for it - hear from our happy customers!
+                </p>
+            </div>
+            
+            <div class="splide" id="reviewSlider">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <div class="review-card">
+                                <img src="resources/customer-1.jpg" alt="Sarah M." class="w-16 h-16 rounded-full mx-auto mb-4 object-cover">
+                                <div class="star-rating">★★★★★</div>
+                                <h3 class="font-display font-semibold text-xl mb-2">Sarah M.</h3>
+                                <p class="text-gray-600 italic">"Absolutely amazing experience! I burned calories while creating the most delicious strawberry banana smoothie. The perfect combo of exercise and healthy treat!"</p>
+                            </div>
+                        </li>
+                        
+                        <li class="splide__slide">
+                            <div class="review-card">
+                                <img src="resources/customer-2.jpg" alt="Mike T." class="w-16 h-16 rounded-full mx-auto mb-4 object-cover">
+                                <div class="star-rating">★★★★★</div>
+                                <h3 class="font-display font-semibold text-xl mb-2">Mike T.</h3>
+                                <p class="text-gray-600 italic">"Brought my whole family and everyone loved it! My kids actually asked for seconds of the spinach smoothie - that's never happened before. Highly recommend!"</p>
+                            </div>
+                        </li>
+                        
+                        <li class="splide__slide">
+                            <div class="review-card">
+                                <img src="resources/customer-3.jpg" alt="Emma R." class="w-16 h-16 rounded-full mx-auto mb-4 object-cover">
+                                <div class="star-rating">★★★★★</div>
+                                <h3 class="font-display font-semibold text-xl mb-2">Emma R.</h3>
+                                <p class="text-gray-600 italic">"Best workout ever! I usually dread exercise, but this was so much fun I didn't want to stop. The mango smoothie I made was incredible too!"</p>
+                            </div>
+                        </li>
+                        
+                        <li class="splide__slide">
+                            <div class="review-card">
+                                <div class="w-16 h-16 rounded-full mx-auto mb-4 bg-primary-color flex items-center justify-center text-white text-2xl" style="background-color: var(--primary-color);">JD</div>
+                                <div class="star-rating">★★★★★</div>
+                                <h3 class="font-display font-semibold text-xl mb-2">Jessica D.</h3>
+                                <p class="text-gray-600 italic">"Perfect for team building events! Our office had a blast and everyone left with energy and smiles. The blueberry boost smoothie is my new favorite!"</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4">
+        <div class="max-w-4xl mx-auto text-center reveal">
+            <h2 class="font-display font-bold text-4xl lg:text-5xl mb-6">
+                Ready to <span class="text-primary-color" style="color: var(--primary-color);">Pedal & Blend?</span>
+            </h2>
+            <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
+                Get in touch to book your smoothie bike experience! We offer flexible packages for events, 
+                parties, and regular sessions. Let's create something delicious together!
+            </p>
+            
+            <div class="bg-white rounded-3xl p-12 shadow-2xl">
+                <div class="text-6xl mb-6">🚴‍♂️🥤</div>
+                <h3 class="font-display font-semibold text-2xl mb-6">Enquire About Our Packages</h3>
+                <p class="text-gray-600 mb-8">
+                    Perfect for birthday parties, corporate events, fitness classes, or just a fun day out!
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                    <a href="https://wa.me/0000000000" class="whatsapp-btn text-lg">
+                        <span>💬</span>
+                        WhatsApp Enquiry
+                    </a>
+                    
+                    <div class="text-center">
+                        <div class="text-sm text-gray-500 mb-2">Quick Response</div>
+                        <div class="text-lg font-semibold" style="color: var(--primary-color);">Usually within 1 hour</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 bg-white/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="font-display font-bold text-2xl mb-4" style="color: var(--primary-color);">
+                🚴‍♂️ Pedal & Blend
+            </div>
+            <p class="text-gray-600 mb-4">
+                Transforming energy into delicious nutrition, one pedal at a time.
+            </p>
+            <p class="text-sm text-gray-500">
+                © 2024 Pedal & Blend Experience. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Typed.js for hero tagline
+        document.addEventListener('DOMContentLoaded', function() {
+            new Typed('#typed-tagline', {
+                strings: [
+                    'Blend a fresh drink using your own energy!',
+                    'Turn exercise into delicious nutrition!',
+                    'Create healthy smoothies while having fun!',
+                    'Pedal your way to fresh flavors!'
+                ],
+                typeSpeed: 50,
+                backSpeed: 30,
+                backDelay: 2000,
+                loop: true,
+                showCursor: true,
+                cursorChar: '|'
+            });
+
+            // Initialize Splide carousel
+            new Splide('#reviewSlider', {
+                type: 'loop',
+                perPage: 3,
+                perMove: 1,
+                gap: '2rem',
+                autoplay: true,
+                interval: 4000,
+                pauseOnHover: true,
+                breakpoints: {
+                    1024: {
+                        perPage: 2,
+                    },
+                    768: {
+                        perPage: 1,
+                    }
+                }
+            }).mount();
+
+            // Scroll reveal animation
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            revealElements.forEach(element => {
+                revealObserver.observe(element);
+            });
+
+            // Flavor wheel interaction
+            const flavorWheel = document.getElementById('flavorWheel');
+            const selectedFlavor = document.getElementById('selectedFlavor');
+            const flavors = [
+                { name: 'Berry Blast', emoji: '🍓' },
+                { name: 'Green Power', emoji: '🥬' },
+                { name: 'Tropical Twist', emoji: '🍍' },
+                { name: 'Citrus Burst', emoji: '🍊' },
+                { name: 'Mango Magic', emoji: '🥭' },
+                { name: 'Protein Punch', emoji: '💪' },
+                { name: 'Antioxidant Mix', emoji: '🫐' },
+                { name: 'Energy Boost', emoji: '⚡' }
+            ];
+            
+            let currentFlavorIndex = 0; // make sure this exists at the top
+
+            flavorWheel.addEventListener('click', () => {
+                currentFlavorIndex = (currentFlavorIndex + 1) % flavors.length;
+                const flavor = flavors[currentFlavorIndex];
+                
+                anime({
+                    targets: flavorWheel,
+                    rotate: '+=350', // spin almost a full circle
+                    duration: 800,   // slightly longer for smoother spin
+                    easing: 'easeOutCubic'
+                });
+                
+                setTimeout(() => {
+                    selectedFlavor.textContent = flavor.name;
+                    flavorWheel.querySelector('.text-2xl').textContent = flavor.emoji;
+                }, 400); // halfway through rotation for natural effect
+            });
+
+            // Pedal power counter demo
+            const powerCounter = document.getElementById('powerCounter');
+            const powerFill = document.getElementById('powerFill');
+            const powerPercentage = document.getElementById('powerPercentage');
+            let isPedaling = false;
+
+            powerCounter.addEventListener('click', () => {
+                if (isPedaling) return;
+                
+                isPedaling = true;
+                let progress = 0;
+                
+                const interval = setInterval(() => {
+                    progress += 2;
+                    powerFill.style.width = progress + '%';
+                    powerPercentage.textContent = progress + '%';
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            powerFill.style.width = '0%';
+                            powerPercentage.textContent = '0%';
+                            isPedaling = false;
+                        }, 1000);
+                    }
+                }, 50);
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Add floating animation to hero image
+            anime({
+                targets: '.floating',
+                translateY: [30, 40],
+                duration: 3000,
+                easing: 'easeInOutSine',
+                direction: 'alternate',
+                loop: true
+            });
+        });
+    </script>
+</body>
+</html>

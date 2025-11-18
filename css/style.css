@@ -520,6 +520,17 @@ a {
       padding: 50px;
       margin: 0 auto;
   }
+  
+  @media (max-width: 768px) {
+    .cycle-diagram {
+      transform: scale(0.7);
+      transform-origin: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+  }
 
   .box {
       position: absolute;
@@ -773,6 +784,14 @@ a {
 .procedure_category .categories_post:hover .categories_details {
   opacity: 1;
   background: rgba(34, 34, 34, 0.5); }
+
+@media (max-width: 768px) {
+  .procedure_category .categories_post img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+}  
 
 /*---------------------------------------------------- */
 /*----------------------------------------------------*/

@@ -258,20 +258,30 @@
     <!-- Navigation -->
     <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="font-display font-bold text-xl text-primary-color" style="color: var(--primary-color);">
-                    🚴‍♂️ Pedal & Blend
+            <div class="relative flex items-center h-16">
+
+                <!-- Centered Navigation Links -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-700 transition-colors hover:text-[color:var(--primary-color)]">Home</a>
+                    <a href="#how-it-works" class="text-gray-700 transition-colors hover:text-[color:var(--primary-color)]">How It Works</a>
+                    <a href="#benefits" class="text-gray-700 transition-colors hover:text-[color:var(--primary-color)]">Benefits</a>
+                    <a href="#reviews" class="text-gray-700 transition-colors hover:text-[color:var(--primary-color)]">Reviews</a>
+                    <a href="#contact" class="text-gray-700 transition-colors hover:text-[color:var(--primary-color)]">Contact</a>
                 </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="text-gray-700 hover:text-primary-color transition-colors" style="--primary-color: var(--primary-color);">Home</a>
-                    <a href="#how-it-works" class="text-gray-700 hover:text-primary-color transition-colors">How It Works</a>
-                    <a href="#benefits" class="text-gray-700 hover:text-primary-color transition-colors">Benefits</a>
-                    <a href="#reviews" class="text-gray-700 hover:text-primary-color transition-colors">Reviews</a>
-                    <a href="#contact" class="text-gray-700 hover:text-primary-color transition-colors">Contact</a>
+
+                <!-- Right Aligned Button -->
+                <div class="ml-auto">
+                    <a href="index.html"
+                    class="inline-flex items-center px-6 py-2 rounded-full font-semibold text-white transition-all duration-300"
+                    style="background: var(--primary-color); box-shadow: 0 4px 20px rgba(63, 172, 228, 0.3);">
+                        Back to Mintirho
+                    </a>
                 </div>
+
             </div>
         </div>
     </nav>
+
 
     <!-- Hero Section -->
     <section id="home" class="min-h-screen flex items-center justify-center pt-16 px-4">
@@ -516,7 +526,7 @@
                 Transforming energy into delicious nutrition, one pedal at a time.
             </p>
             <p class="text-sm text-gray-500">
-                © 2024 Pedal & Blend Experience. All rights reserved. Created By Katore Solution
+                © 2026 Pedal & Blend Experience. All rights reserved. Created By Katore Solution
             </p>
         </div>
     </footer>

@@ -1,0 +1,232 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import logo from '../assets/brand/mintirho-logo.png';
+import { servicesByGroup, serviceHref } from '../data/services';
+import { site, whatsappUrl } from '../data/site';
+
+const year = new Date().getFullYear();
+const columns = [
+  { id: 'footer-services', title: 'Services', links: servicesByGroup('occupational') },
+  { id: 'footer-wellness', title: 'Wellness', links: servicesByGroup('wellness') },
+];
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <div class="site-footer__brand">
+      <Image
+        src={logo}
+        alt={site.name}
+        width={115}
+        height={48}
+        densities={[2, 3]}
+        format="webp"
+        quality={90}
+      />
+      <p>
+        A legal compliance medical surveillance company, registered in {site.registered.display} and
+        operating since {site.operational.display}.
+      </p>
+    </div>
+
+    {columns.map((column) => (
+      <nav class="site-footer__col" aria-labelledby={column.id}>
+        <h2 id={column.id} class="site-footer__title">
+          {column.title}
+        </h2>
+        <ul role="list">
+          {column.links.map((service) => (
+            <li>
+              <a href={serviceHref(service)}>{service.title}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    ))}
+
+    <div class="site-footer__col">
+      <h2 class="site-footer__title">Contact</h2>
+      <ul role="list" class="site-footer__contact">
+        <li>
+          <a href={site.mapUrl} target="_blank" rel="noopener noreferrer">
+            {site.addressLines[0]}
+            <br />
+            {site.addressLines[1]}
+            <span class="visually-hidden"> (opens Google Maps in a new tab)</span>
+          </a>
+        </li>
+        <li>
+          <a href={site.phones.office.href}>{site.phones.office.display}</a>
+        </li>
+        <li>
+          <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+            WhatsApp {site.phones.mobile.display}
+            <span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
+        </li>
+        <li>
+          <a href={`mailto:${site.emails.admin}`}>{site.emails.admin}</a>
+        </li>
+        <li>
+          <a href={`mailto:${site.emails.ivLounge}`}>{site.emails.ivLounge}</a>
+        </li>
+        <li class="site-footer__hours">{site.hours.display}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container site-footer__bottom">
+    <p>
+      &copy; {year} {site.legalName}. All rights reserved.
+      <span class="site-footer__credit">
+        Built by <a href="https://katoresolutions.co.za" target="_blank" rel="noopener noreferrer">Katore Solutions</a>
+      </span>
+    </p>
+    <ul role="list" class="site-footer__social">
+      {site.socials.map((social) => (
+        <li>
+          <a href={social.href} target="_blank" rel="noopener noreferrer">
+            <Icon name={social.icon} size={20} />
+            <span class="visually-hidden">
+              {social.label} {social.handle} (opens in a new tab)
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-bg-tint);
+    border-top: 1px solid var(--navy-100);
+    font-size: 0.9375rem;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    gap: 2.5rem 2rem;
+    padding-block: clamp(3rem, 2rem + 4vw, 4.5rem);
+  }
+
+  @media (min-width: 40em) {
+    .site-footer__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 64em) {
+    .site-footer__grid {
+      grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+    }
+  }
+
+  .site-footer__brand {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+    max-width: 22rem;
+    color: var(--color-text-muted);
+  }
+
+  .site-footer__brand img {
+    width: auto;
+    height: 3rem;
+  }
+
+  .site-footer__title {
+    margin-bottom: 0.75rem;
+    font-size: var(--text-base);
+    font-weight: 700;
+    letter-spacing: -0.005em;
+  }
+
+  .site-footer__col ul {
+    list-style: none;
+    display: grid;
+  }
+
+  .site-footer__col a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+    padding-block: 0.25rem;
+    color: var(--slate-700);
+    text-decoration: none;
+  }
+
+  .site-footer__col a:hover {
+    color: var(--navy-800);
+    text-decoration: underline;
+  }
+
+  .site-footer__contact {
+    gap: 0.125rem;
+  }
+
+  .site-footer__contact a {
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  .site-footer__hours {
+    padding-top: 0.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding-block: 1.25rem;
+    border-top: 1px solid var(--navy-100);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .site-footer__credit {
+    display: block;
+    margin-top: 0.125rem;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+
+  .site-footer__credit a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  .site-footer__social {
+    list-style: none;
+    display: flex;
+    gap: 0.625rem;
+  }
+
+  .site-footer__social a {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--navy-100);
+    border-radius: var(--radius-pill);
+    background: var(--white);
+    color: var(--navy-800);
+    transition:
+      background-color var(--duration) var(--ease-out),
+      border-color var(--duration) var(--ease-out),
+      color var(--duration) var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .site-footer__social a:hover {
+      border-color: var(--navy-800);
+      background: var(--navy-800);
+      color: var(--white);
+    }
+  }
+</style>

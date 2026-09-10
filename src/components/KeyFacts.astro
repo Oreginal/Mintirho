@@ -1,0 +1,55 @@
+---
+import { site } from '../data/site';
+
+const facts = [
+  { term: 'Registered', detail: site.registered.display },
+  { term: 'Operating since', detail: site.operational.display },
+  { term: 'Based in', detail: `${site.address.city}, ${site.address.region}` },
+  {
+    term: 'Legislation',
+    detail:
+      'Occupational Health and Safety Act No 85, 1993, Mines Health and Safety Act No 29, 1996, and the Employment Equity Act',
+  },
+];
+---
+
+<dl class="facts">
+  {facts.map((fact) => (
+    <div class="facts__row">
+      <dt>{fact.term}</dt>
+      <dd>{fact.detail}</dd>
+    </div>
+  ))}
+</dl>
+
+<style>
+  .facts {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .facts__row {
+    display: grid;
+    gap: 0.25rem;
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 40em) {
+    .facts__row {
+      grid-template-columns: 10rem 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  dt {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    line-height: 1.8;
+  }
+
+  dd {
+    color: var(--color-heading);
+    font-weight: 600;
+  }
+</style>

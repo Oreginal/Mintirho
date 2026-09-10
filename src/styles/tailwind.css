@@ -1,0 +1,15 @@
+/*
+ * Tailwind CSS v4, used by shadcn style React components in src/components/ui.
+ *
+ * Preflight (Tailwind's CSS reset) is deliberately not imported, so the site's
+ * own base styles in global.css stay in control and Tailwind only adds theme
+ * variables and the utility classes that components actually use.
+ *
+ * Note: unlayered site CSS (tokens.css, global.css) takes precedence over these
+ * layered utilities, and site tokens with the same name as Tailwind theme
+ * variables (for example --text-xl, --radius-lg) override Tailwind's defaults.
+ */
+@layer theme, base, components, utilities;
+
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);

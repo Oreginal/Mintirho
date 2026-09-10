@@ -1,0 +1,267 @@
+---
+import { Picture } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ServiceList from '../../components/ServiceList.astro';
+import PendingContent from '../../components/PendingContent.astro';
+import Icon, { type IconName } from '../../components/Icon.astro';
+import mobileUnitExterior from '../../assets/photos/mobile-unit-exterior.jpg';
+import mobileUnitInterior from '../../assets/photos/mobile-unit-interior.jpg';
+import { groups, servicesByGroup, templatedServices, type Service } from '../../data/services';
+import { media, type MediaImage } from '../../data/media';
+import { site, whatsappUrl } from '../../data/site';
+
+export function getStaticPaths() {
+  return templatedServices.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+const related = servicesByGroup(service.group).filter((s) => s.slug !== service.slug);
+const isWellness = service.group === 'wellness';
+const enquireHref = `/contact?topic=${service.topic}`;
+
+/** Real Mintirho photos relevant to a service. Low resolution sources, so shown small. */
+const photos: Partial<Record<string, { src: ImageMetadata; alt: string; caption: string }[]>> = {
+  'medical-surveillance': [
+    {
+      src: mobileUnitExterior,
+      alt: 'The side of the white Mintirho van, branded Occupational Health Mobile Unit',
+      caption: 'Our occupational health mobile unit',
+    },
+    {
+      src: mobileUnitInterior,
+      alt: 'Inside the Mintirho mobile unit, fitted with an examination bed and a workstation',
+      caption: 'Inside the mobile unit',
+    },
+  ],
+};
+const servicePhotos = photos[service.slug];
+
+// Framed hero photos for individual service pages.
+const heroes: Partial<
+  Record<
+    string,
+    {
+      image: MediaImage;
+      caption: { icon: IconName; text: string; badge: string };
+      aspect?: string;
+      position?: string;
+    }
+  >
+> = {
+  'medical-surveillance': {
+    image: media.clinicScreening,
+    caption: {
+      icon: 'stethoscope',
+      text: 'Medical surveillance and screening',
+      badge: 'Occupational health',
+    },
+  },
+  'on-site-clinic': {
+    image: media.onSiteClinic,
+    caption: { icon: 'stethoscope', text: 'We bring care to your workplace', badge: 'On site' },
+    // Portrait, angled photo: a square crop keeps the logo and service list in view.
+    aspect: '1 / 1',
+    position: '50% 55%',
+  },
+};
+const hero = heroes[service.slug];
+---
+
+<BaseLayout title={service.title} description={service.summary}>
+  <PageHero
+    crumbs={[
+      { name: 'Services', path: '/services' },
+      { name: service.title, path: `/services/${service.slug}` },
+    ]}
+    eyebrow={groups[service.group].title}
+    tone={isWellness ? 'wellness' : 'accent'}
+    title={service.title}
+    lead={service.summary}
+    image={hero?.image}
+    imageCaption={hero?.caption}
+    imageAspect={hero?.aspect}
+    imagePosition={hero?.position}
+  >
+    <a class:list={['btn', isWellness ? 'btn--wellness' : 'btn--primary']} href={enquireHref}>
+      Enquire about this service
+      <Icon name="arrow-right" class="icon-arrow" />
+    </a>
+    <a class="btn btn--ghost" href={site.phones.office.href}>
+      <Icon name="phone" />
+      {site.phones.office.display}
+    </a>
+  </PageHero>
+
+  <section class="section">
+    <div class="container service-body">
+      <div class="service-body__main">
+        {service.intro && (
+          <div class="prose" data-reveal>
+            {service.intro.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+        )}
+
+        {service.sections.map((section) => (
+          <div class="service-section" data-reveal>
+            <h2 class="heading-sub">{section.heading}</h2>
+            {section.body && <p>{section.body}</p>}
+            {section.items && (
+              <ul class:list={['checklist', { 'checklist--wellness': isWellness }]} role="list">
+                {section.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
+
+        {service.status === 'pending' && <PendingContent topic={service.topic} />}
+
+        {servicePhotos && (
+          <div class="service-photos" data-reveal>
+            {servicePhotos.map((photo) => (
+              <figure>
+                <div class="media-frame service-photos__frame">
+                  <Picture
+                    src={photo.src}
+                    formats={['avif', 'webp']}
+                    widths={[320, 480, 640]}
+                    sizes="(min-width: 64em) 20rem, (min-width: 40em) 45vw, 100vw"
+                    alt={photo.alt}
+                  />
+                </div>
+                <figcaption>{photo.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <aside class="service-aside" aria-labelledby="service-aside-heading">
+        <h2 id="service-aside-heading" class="service-aside__title">
+          Talk to us about {service.title.toLowerCase()}
+        </h2>
+        <p>We are open {site.hours.display}.</p>
+        <div class="service-aside__actions">
+          <a class:list={['btn', isWellness ? 'btn--wellness' : 'btn--primary']} href={enquireHref}>
+            Send an enquiry
+          </a>
+          <a class="btn btn--ghost" href={site.phones.office.href}>
+            <Icon name="phone" />
+            Call {site.phones.office.display}
+          </a>
+          <a class="btn btn--soft" href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+            <Icon name="message" />
+            WhatsApp<span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="section section--muted" aria-labelledby="related-heading">
+      <div class="container">
+        <SectionHeading
+          eyebrow={groups[service.group].title}
+          title="Related services"
+          tone={isWellness ? 'wellness' : 'accent'}
+          id="related-heading"
+        />
+        <ServiceList services={related} />
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .service-body {
+    display: grid;
+    gap: 3rem;
+  }
+
+  @media (min-width: 64em) {
+    .service-body {
+      grid-template-columns: minmax(0, 1fr) 22rem;
+      gap: 5rem;
+      align-items: start;
+    }
+  }
+
+  .service-body__main {
+    display: grid;
+    gap: 2.5rem;
+    max-width: 44rem;
+  }
+
+  .service-section {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .service-photos {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 40em) {
+    .service-photos {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .service-photos__frame {
+    aspect-ratio: 4 / 5;
+  }
+
+  .service-photos figcaption {
+    margin-top: 0.625rem;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .service-aside {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    box-shadow: var(--shadow-1);
+  }
+
+  @media (min-width: 64em) {
+    .service-aside {
+      position: sticky;
+      top: calc(var(--header-h) + 2rem);
+    }
+  }
+
+  .service-aside__title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .service-aside p {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .service-aside__actions {
+    display: grid;
+    gap: 0.625rem;
+    margin-top: 0.5rem;
+  }
+</style>

@@ -1,0 +1,90 @@
+---
+/**
+ * Plays a real video when one is configured in src/data/media.ts. Until then
+ * it shows the poster image and points to Instagram, with no fake player UI.
+ */
+import { Picture, getImage } from 'astro:assets';
+import Icon from './Icon.astro';
+import type { MediaImage } from '../data/media';
+
+interface Props {
+  poster: MediaImage;
+  video: { src?: string; type?: string; captions?: string; title: string };
+  instagramUrl: string;
+  instagramHandle: string;
+}
+
+const { poster, video, instagramUrl, instagramHandle } = Astro.props;
+const posterImage = video.src
+  ? await getImage({ src: poster.src, width: 1376, format: 'jpg' })
+  : null;
+---
+
+<figure class="video-feature" data-reveal>
+  <div class="media-frame video-feature__frame">
+    {video.src && posterImage ? (
+      <video
+        controls
+        muted
+        playsinline
+        preload="metadata"
+        poster={posterImage.src}
+        title={video.title}
+        aria-label={video.title}
+      >
+        <source src={video.src} type={video.type ?? 'video/mp4'} />
+        {video.captions && (
+          <track kind="captions" src={video.captions} srclang="en" label="English" default />
+        )}
+      </video>
+    ) : (
+      <Picture
+        src={poster.src}
+        formats={['avif', 'webp']}
+        widths={[480, 800, 1100, 1376]}
+        sizes="(min-width: 80em) 72rem, 100vw"
+        alt={poster.alt}
+      />
+    )}
+  </div>
+  {instagramUrl && (
+    <figcaption class="video-feature__caption">
+      <a class="link-arrow" href={instagramUrl} target="_blank" rel="noopener noreferrer">
+        <span>
+          Follow us on Instagram, {instagramHandle}
+          <Icon name="external" size={16} class="video-feature__icon" />
+        </span>
+        <span class="visually-hidden"> (opens in a new tab)</span>
+      </a>
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .video-feature__frame {
+    aspect-ratio: 16 / 9;
+  }
+
+  .video-feature__frame video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: var(--slate-900);
+  }
+
+  .video-feature__caption {
+    margin-top: 0.75rem;
+  }
+
+  .video-feature__caption .link-arrow {
+    color: var(--emerald-700);
+  }
+
+  /* Keep the external link icon on the same line as the handle when text wraps. */
+  .video-feature__caption :global(.video-feature__icon) {
+    display: inline-block;
+    margin-left: 0.25rem;
+    vertical-align: -0.15em;
+  }
+</style>

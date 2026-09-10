@@ -1,0 +1,513 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon, { type IconName } from '../components/Icon.astro';
+import FeatureImage from '../components/FeatureImage.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import KeyFacts from '../components/KeyFacts.astro';
+import Testimonials from '../components/Testimonials.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { DotPattern } from '@/components/ui/dot-pattern';
+import { media } from '../data/media';
+import { getService, serviceHref } from '../data/services';
+import { ivLounge, smoothieBike } from '../data/offerings';
+import { site, whatsappUrl } from '../data/site';
+
+const link = (slug: string) => {
+  const service = getService(slug);
+  return { label: service.title, href: serviceHref(service) };
+};
+
+const pillars: {
+  key: string;
+  label: string;
+  icon: IconName;
+  title: string;
+  text: string;
+  links: { label: string; href: string }[];
+}[] = [
+  {
+    key: 'occupational',
+    label: 'Clinical practice',
+    icon: 'stethoscope',
+    title: 'Occupational health',
+    text: 'Medical examinations and on site care that keep your workforce healthy, safe and able to keep up with production requirements.',
+    links: [link('medical-surveillance'), link('on-site-clinic'), link('injury-on-duty')],
+  },
+  {
+    key: 'risk',
+    label: 'Risk advisory',
+    icon: 'clipboard',
+    title: 'Risk and compliance',
+    text: 'Hygiene surveys, risk assessments and occupational medical information that helps management respond to issues such as sick absenteeism, disability and incapacity due to ill health.',
+    links: [link('risk-assessment'), { label: 'Consulting Services', href: '/contact' }],
+  },
+  {
+    key: 'wellness',
+    label: 'Active wellness',
+    icon: 'pulse',
+    title: 'Wellness',
+    text: 'Employee wellness programmes, our IV lounge and the Smoothie Bike, supporting health beyond compliance.',
+    links: [link('smoothie-bike'), link('employee-wellness'), link('iv-lounge')],
+  },
+];
+---
+
+<BaseLayout description="Mintirho Healthcare and Consulting Services provides medical surveillance, hygiene surveys and risk assessment, on site clinic management and employee wellness, including the Smoothie Bike and IV lounge.">
+  <section class="home-hero">
+    <!-- Decorative dot pattern (shadcn React component, rendered to static SVG at build time). -->
+    <DotPattern
+      width={22}
+      height={22}
+      cx={1.3}
+      cy={1.3}
+      cr={1.3}
+      className="fill-slate-400/70 [mask-image:radial-gradient(ellipse_110%_90%_at_50%_40%,white_50%,transparent_100%)]"
+    />
+    <div class="container home-hero__grid">
+      <div class="home-hero__copy">
+        <p class="hero-badge" data-hero-item>
+          <span class="hero-badge__dot" aria-hidden="true"></span>
+          Established 2014 · Alberton, Gauteng
+        </p>
+        <h1 class="heading-display">Occupational health, compliance and workplace wellness</h1>
+        <p class="lead" data-hero-item>
+          We support employers in meeting their legal requirements and make sure employees receive a
+          comprehensive medical screening programme, in line with the Occupational Health and Safety
+          Act and the Mines Health and Safety Act.
+        </p>
+        <div class="btn-row" data-hero-item>
+          <a class="btn btn--primary" href="/services">
+            Explore our services
+            <Icon name="arrow-right" class="icon-arrow" />
+          </a>
+          <a class="btn btn--soft" href="/smoothie-bike">
+            <Icon name="bike" />
+            Meet the Smoothie Bike
+          </a>
+        </div>
+      </div>
+
+      <FeatureImage
+        image={media.homeHero}
+        aspect="4 / 3"
+        position="55% 50%"
+        widths={[480, 720, 960, 1408]}
+        sizes="(min-width: 80em) 36rem, (min-width: 56em) 45vw, 100vw"
+        priority
+        caption={{
+          icon: 'verified',
+          text: 'Alberton Practice & Mobile Unit',
+          badge: site.accreditation,
+        }}
+      />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="pillars-heading">
+    <div class="container">
+      <SectionHeading
+        eyebrow="What we do"
+        title="Care for your workforce, from compliance to wellness"
+        lead="Mintirho appreciates the enormous task and challenges facing employers to ensure sound governance and compliance to legislation."
+        align="center"
+        id="pillars-heading"
+      />
+      <div class="pillars">
+        {pillars.map((pillar) => (
+          <article class={`pillar pillar--${pillar.key}`} data-reveal>
+            <span class="pillar__icon">
+              <Icon name={pillar.icon} size={22} />
+            </span>
+            <p class="pillar__label">{pillar.label}</p>
+            <h3 class="heading-sub">{pillar.title}</h3>
+            <p>{pillar.text}</p>
+            <ul class="pillar__links" role="list">
+              {pillar.links.map((item) => (
+                <li>
+                  <a class="link-arrow" href={item.href}>
+                    {item.label}
+                    <Icon name="arrow-right" class="icon-arrow" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+
+      <div class="iv-card" data-reveal>
+        <div class="iv-card__copy">
+          <p class="iv-card__eyebrow">
+            <Icon name="droplet" size={16} />
+            IV Lounge
+          </p>
+          <h3 class="heading-sub">Intravenous therapy drips</h3>
+          <p class="iv-card__text">
+            A range of intravenous therapies designed to replenish, rejuvenate and revive your body,
+            provided in a relaxing and comfortable environment.
+          </p>
+        </div>
+        <div class="iv-card__side">
+          <ul class="iv-card__drips" role="list" aria-label="Some of our drips">
+            {ivLounge.highlights.map((drip) => (
+              <li>{drip}</li>
+            ))}
+          </ul>
+          <div class="iv-card__actions">
+            <a class="btn btn--primary btn--sm" href="/iv-lounge#book">
+              Book an IV drip
+            </a>
+            <a class="link-arrow" href="/iv-lounge">
+              See all {ivLounge.drips.length} drips
+              <Icon name="arrow-right" class="icon-arrow" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="smoothie-band" aria-labelledby="smoothie-heading">
+    <div class="container smoothie-band__grid">
+      <FeatureImage
+        image={media.smoothieFeature}
+        aspect="16 / 10"
+        widths={[480, 720, 960, 1408]}
+        sizes="(min-width: 80em) 42rem, (min-width: 56em) 52vw, 100vw"
+        drift
+        reveal
+        overlay={{ icon: 'bike', title: 'Pedal powered', text: 'Blend your own smoothie' }}
+      />
+      <div class="smoothie-band__copy" data-reveal>
+        <p class="eyebrow eyebrow--wellness">{smoothieBike.brand}</p>
+        <h2 id="smoothie-heading" class="heading-section">
+          Meet the Mintirho Smoothie Bike
+        </h2>
+        <p class="lead">{smoothieBike.invitation}</p>
+        <p>
+          {smoothieBike.intro} It is part of our wellness offering, alongside employee wellness and
+          our IV lounge, and is available for events, parties and regular sessions.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--wellness" href="/smoothie-bike">
+            Explore the Smoothie Bike
+            <Icon name="arrow-right" class="icon-arrow" />
+          </a>
+          <a
+            class="btn btn--ghost"
+            href={whatsappUrl(smoothieBike.whatsappMessage)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icon name="message" />
+            Enquire on WhatsApp<span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="about-heading">
+    <div class="container about-snap">
+      <div class="about-snap__copy" data-reveal>
+        <p class="eyebrow">About Mintirho</p>
+        <h2 id="about-heading" class="heading-section">
+          Medical expertise that helps employers act decisively
+        </h2>
+        <p>
+          We are confident that we add value by providing medical expertise and occupational medical
+          information useful to management in responding to workplace health related issues, such as
+          sick absenteeism, disability and incapacity due to ill health.
+        </p>
+        <a class="link-arrow" href="/about">
+          More about Mintirho
+          <Icon name="arrow-right" class="icon-arrow" />
+        </a>
+      </div>
+      <div data-reveal>
+        <KeyFacts />
+      </div>
+    </div>
+  </section>
+
+  <Testimonials />
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .home-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: clamp(2.5rem, 1.5rem + 5vw, 5.5rem);
+    border-bottom: 1px solid var(--color-border);
+    background:
+      radial-gradient(900px 480px at 80% 0%, var(--sky-100), transparent 65%),
+      linear-gradient(180deg, var(--white), var(--slate-50));
+  }
+
+  .hero-badge {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.875rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--white);
+    box-shadow: var(--shadow-1);
+    color: var(--navy-800);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .hero-badge__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--emerald-500);
+    box-shadow: 0 0 0 3px var(--emerald-100);
+  }
+
+  .home-hero__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: clamp(2rem, 1rem + 4vw, 4rem);
+    align-items: center;
+  }
+
+  @media (min-width: 56em) {
+    .home-hero__grid {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    }
+  }
+
+  .home-hero__copy {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 40rem;
+  }
+
+  .home-hero__copy .btn-row {
+    margin-top: 0.5rem;
+  }
+
+  /* Pillars (Stitch style tinted cards) */
+  .pillars {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 56em) {
+    .pillars {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  .pillar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    padding: clamp(1.5rem, 1.1rem + 1.5vw, 2rem);
+    border: 1px solid #dce9ff;
+    border-radius: var(--radius-xl);
+    background: var(--blue-tint);
+    transition:
+      translate var(--duration) var(--ease-out),
+      box-shadow var(--duration) var(--ease-out),
+      background-color var(--duration) var(--ease-out);
+  }
+
+  /* translate (not transform) so the hover lift never fights GSAP's reveal transform. */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .pillar:hover {
+      translate: 0 -3px;
+      background: var(--white);
+      box-shadow: var(--shadow-3);
+    }
+  }
+
+  .pillar__icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius);
+    background: var(--navy-800);
+    color: var(--white);
+  }
+
+  .pillar--risk .pillar__icon {
+    background: var(--ruby-600);
+  }
+
+  .pillar--wellness .pillar__icon {
+    background: var(--emerald-700);
+  }
+
+  .pillar__label {
+    margin-top: 0.5rem;
+    color: var(--navy-800);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .pillar--risk .pillar__label {
+    color: var(--ruby-600);
+  }
+
+  .pillar--wellness .pillar__label {
+    color: var(--emerald-700);
+  }
+
+  .pillar p {
+    color: var(--color-text-muted);
+  }
+
+  .pillar__links {
+    list-style: none;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    border-top: 1px solid #cfdff5;
+  }
+
+  .pillar--wellness .link-arrow {
+    color: var(--emerald-700);
+  }
+
+  /* IV Lounge highlight (Stitch "infusion bar" block) */
+  .iv-card {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    padding: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--white);
+    box-shadow: var(--shadow-1);
+  }
+
+  @media (min-width: 56em) {
+    .iv-card {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 3rem;
+      align-items: center;
+    }
+  }
+
+  .iv-card__copy {
+    display: grid;
+    gap: 0.625rem;
+  }
+
+  .iv-card__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--ruby-600);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .iv-card__text {
+    color: var(--color-text-muted);
+  }
+
+  .iv-card__side {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+  }
+
+  .iv-card__drips {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .iv-card__drips li {
+    padding: 0.375rem 0.875rem;
+    border-radius: var(--radius-pill);
+    background: var(--navy-50);
+    color: var(--navy-800);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .iv-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+  }
+
+  @media (min-width: 56em) {
+    .iv-card__side {
+      justify-items: end;
+    }
+
+    .iv-card__drips {
+      justify-content: flex-end;
+    }
+  }
+
+  /* Smoothie Bike feature */
+  .smoothie-band {
+    padding-block: var(--section-space);
+    border-block: 1px solid var(--navy-100);
+    background: var(--gradient-brand-soft);
+  }
+
+  .smoothie-band__grid {
+    display: grid;
+    gap: clamp(2rem, 1rem + 4vw, 4rem);
+    align-items: center;
+  }
+
+  @media (min-width: 56em) {
+    .smoothie-band__grid {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    }
+  }
+
+  .smoothie-band__copy {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+  }
+
+  .smoothie-band__copy .btn-row {
+    margin-top: 0.5rem;
+  }
+
+  /* About snapshot */
+  .about-snap {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 56em) {
+    .about-snap {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 4rem;
+      align-items: start;
+    }
+  }
+
+  .about-snap__copy {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+    max-width: 36rem;
+  }
+</style>

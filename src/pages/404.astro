@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<BaseLayout
+  title="Page not found"
+  description="The page you are looking for could not be found."
+  noindex
+>
+  <section class="section not-found">
+    <div class="container not-found__inner">
+      <p class="eyebrow">Page not found</p>
+      <h1 class="heading-display">We could not find that page</h1>
+      <p class="lead">
+        The page may have moved, or the link may be out of date. These pages might help instead.
+      </p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="/">
+          Go to the homepage
+          <Icon name="arrow-right" class="icon-arrow" />
+        </a>
+        <a class="btn btn--ghost" href="/services">
+          Our services
+        </a>
+        <a class="btn btn--ghost" href="/contact">
+          Contact us
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found__inner {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 40rem;
+  }
+
+  .not-found .btn-row {
+    margin-top: 0.75rem;
+  }
+</style>

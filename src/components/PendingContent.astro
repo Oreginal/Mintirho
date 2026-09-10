@@ -1,0 +1,44 @@
+---
+/**
+ * Shown on services whose full description has not been supplied yet.
+ * Remove by setting the service's status to 'complete' in src/data/services.ts.
+ */
+import Icon from './Icon.astro';
+
+interface Props {
+  topic: string;
+}
+
+const { topic } = Astro.props;
+---
+
+<aside class="pending" aria-labelledby="pending-title">
+  <p class="pending__title" id="pending-title">
+    More detail on this service is on the way
+  </p>
+  <p>
+    We are updating the information on this page. In the meantime, contact us and we will talk you
+    through how we can help your workplace.
+  </p>
+  <a class="link-arrow" href={`/contact?topic=${topic}`}>
+    Enquire about this service
+    <Icon name="arrow-right" class="icon-arrow" />
+  </a>
+</aside>
+
+<style>
+  .pending {
+    display: grid;
+    gap: 0.5rem;
+    justify-items: start;
+    padding: 1.25rem 1.5rem;
+    border-left: 3px solid var(--navy-800);
+    border-radius: var(--radius-sm);
+    background: var(--navy-50);
+  }
+
+  .pending__title {
+    color: var(--color-heading);
+    font-weight: 700;
+  }
+</style>

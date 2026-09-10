@@ -1,0 +1,108 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+import FeatureImage from './FeatureImage.astro';
+import type { IconName } from './Icon.astro';
+import type { MediaImage } from '../data/media';
+import type { Crumb } from '../lib/schema';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  tone?: 'accent' | 'wellness';
+  crumbs?: Crumb[];
+  /** Optional framed photo shown beside the text (below it on phones). */
+  image?: MediaImage;
+  imageCaption?: { icon?: IconName; text: string; badge?: string };
+  /** CSS aspect ratio and object position for the framed photo. */
+  imageAspect?: string;
+  imagePosition?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  lead,
+  tone = 'accent',
+  crumbs,
+  image,
+  imageCaption,
+  imageAspect = '4 / 3',
+  imagePosition = '50% 40%',
+} = Astro.props;
+---
+
+<section class:list={['page-hero', { 'page-hero--media': image }]}>
+  <div class="container">
+    {crumbs && <Breadcrumbs crumbs={crumbs} />}
+    <div class="page-hero__grid">
+      <div class="page-hero__body">
+        {eyebrow && (
+          <p class:list={['eyebrow', { 'eyebrow--wellness': tone === 'wellness' }]} data-hero-item>
+            {eyebrow}
+          </p>
+        )}
+        <h1 class="page-hero__title">{title}</h1>
+        {lead && (
+          <p class="lead" data-hero-item>
+            {lead}
+          </p>
+        )}
+        {Astro.slots.has('default') && (
+          <div class="page-hero__actions btn-row" data-hero-item>
+            <slot />
+          </div>
+        )}
+      </div>
+      {image && (
+        <FeatureImage
+          image={image}
+          aspect={imageAspect}
+          position={imagePosition}
+          widths={[480, 720, 960, 1376]}
+          sizes="(min-width: 80em) 34rem, (min-width: 56em) 42vw, 100vw"
+          priority
+          caption={imageCaption}
+        />
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    padding-block: clamp(1rem, 0.75rem + 1vw, 1.5rem) clamp(3rem, 2rem + 4vw, 4.5rem);
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg-muted);
+  }
+
+  .page-hero__grid {
+    display: grid;
+    gap: clamp(2rem, 1rem + 4vw, 4rem);
+    align-items: center;
+    margin-top: clamp(1rem, 0.5rem + 2vw, 2rem);
+  }
+
+  @media (min-width: 56em) {
+    .page-hero--media .page-hero__grid {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    }
+  }
+
+  .page-hero__body {
+    display: grid;
+    gap: 1rem;
+    max-width: 46rem;
+  }
+
+  .page-hero__title {
+    font-size: clamp(2rem, 1.55rem + 2vw, 2.875rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .page-hero__actions {
+    margin-top: 0.5rem;
+  }
+</style>

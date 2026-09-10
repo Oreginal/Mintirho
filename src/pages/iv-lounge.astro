@@ -1,0 +1,175 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Icon from '../components/Icon.astro';
+import { ivLounge } from '../data/offerings';
+import { site, whatsappUrl, mailtoUrl } from '../data/site';
+---
+
+<BaseLayout
+  title="IV Lounge"
+  description="Mintirho's IV lounge offers a range of intravenous therapy drips designed to replenish, rejuvenate and revive, in a relaxing and comfortable environment in Alberton."
+>
+  <PageHero
+    crumbs={[{ name: 'IV Lounge', path: '/iv-lounge' }]}
+    eyebrow="Wellness"
+    tone="wellness"
+    title="IV Lounge"
+    lead={ivLounge.intro}
+  >
+    <a class="btn btn--wellness" href="#book">
+      Book an IV drip
+      <Icon name="arrow-right" class="icon-arrow" />
+    </a>
+    <a class="btn btn--ghost" href={ivLounge.brochure.href} download>
+      <Icon name="download" />
+      Brochure <span class="file-size">({ivLounge.brochure.size})</span>
+    </a>
+  </PageHero>
+
+  <section class="section" aria-labelledby="drips-heading">
+    <div class="container drips-layout">
+      <div class="drips-intro">
+        <SectionHeading
+          eyebrow="Therapy drips"
+          tone="wellness"
+          title="Our IV therapy drips"
+          lead="Choose from the drips below. The brochure has more detail on each one."
+          id="drips-heading"
+        />
+        <a class="link-arrow" href={ivLounge.brochure.href} download>
+          <Icon name="download" />
+          <span>
+            {ivLounge.brochure.label} <span class="file-size">({ivLounge.brochure.size})</span>
+          </span>
+        </a>
+      </div>
+      <ul class="drips" role="list" data-reveal>
+        {ivLounge.drips.map((drip) => (
+          <li>{drip}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--muted" id="book" aria-labelledby="book-heading">
+    <div class="container book-layout">
+      <div class="book-copy" data-reveal>
+        <p class="eyebrow eyebrow--wellness">Bookings</p>
+        <h2 id="book-heading" class="heading-section">
+          Book your IV drip
+        </h2>
+        <p>
+          Email our IV lounge, send us a WhatsApp or use the enquiry form, and let us know which
+          drip you are interested in. We are open {site.hours.display}.
+        </p>
+        <div class="btn-row">
+          <a
+            class="btn btn--wellness"
+            href={mailtoUrl(site.emails.ivLounge, ivLounge.bookingSubject)}
+          >
+            <Icon name="mail" />
+            Email the IV lounge
+          </a>
+          <a
+            class="btn btn--soft"
+            href={whatsappUrl('Hi, I would like to book an IV drip')}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icon name="message" />
+            WhatsApp<span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
+          <a class="btn btn--ghost" href="/contact?topic=iv-lounge">
+            Enquiry form
+          </a>
+        </div>
+      </div>
+      <aside class="payment" aria-labelledby="payment-heading" data-reveal>
+        <h3 id="payment-heading" class="heading-sub">
+          Payment
+        </h3>
+        <p>{ivLounge.paymentNote}</p>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .file-size {
+    font-weight: 400;
+    opacity: 0.8;
+  }
+
+  .drips-layout {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 64em) {
+    .drips-layout {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.5fr);
+      gap: 4rem;
+      align-items: start;
+    }
+  }
+
+  .drips-intro {
+    display: grid;
+    justify-items: start;
+  }
+
+  .drips-intro :global(.section-heading) {
+    margin-bottom: 1.25rem;
+  }
+
+  .drips {
+    list-style: none;
+    columns: 2;
+    column-gap: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 40em) {
+    .drips {
+      columns: 3;
+    }
+  }
+
+  .drips li {
+    break-inside: avoid;
+    padding-block: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-heading);
+    font-weight: 500;
+  }
+
+  .book-layout {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 56em) {
+    .book-layout {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 4rem;
+      align-items: center;
+    }
+  }
+
+  .book-copy {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+  }
+
+  .payment {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    border-left: 3px solid var(--amber-500);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+  }
+</style>

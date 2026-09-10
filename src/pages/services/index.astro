@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ServiceList from '../../components/ServiceList.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { media } from '../../data/media';
+import { additionalOfferings, groups, servicesByGroup } from '../../data/services';
+---
+
+<BaseLayout
+  title="Services"
+  description="Occupational health services including medical surveillance, hygiene surveys and risk assessment, on site clinic management and injury on duty management, plus employee wellness, the IV lounge and the Smoothie Bike."
+>
+  <PageHero
+    crumbs={[{ name: 'Services', path: '/services' }]}
+    eyebrow="Services"
+    title="Our services"
+    lead="Occupational health services that help employers meet their legal obligations, and wellness services that support the health of employees and individuals beyond compliance."
+    image={media.clinicScreening}
+    imageCaption={{
+      icon: 'stethoscope',
+      text: 'Medical surveillance and screening',
+      badge: 'Occupational health',
+    }}
+  />
+
+  <section class="section" id="occupational" aria-labelledby="occupational-heading">
+    <div class="container services-group">
+      <SectionHeading
+        eyebrow={groups.occupational.eyebrow}
+        title={groups.occupational.title}
+        lead={groups.occupational.description}
+        id="occupational-heading"
+      />
+      <div>
+        <ServiceList services={servicesByGroup('occupational')} />
+        <p class="services-also">
+          We also offer {additionalOfferings.join(' and ')}. <a href="/contact">Contact us</a> to
+          discuss your requirements.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--muted" id="wellness" aria-labelledby="wellness-heading">
+    <div class="container services-group">
+      <SectionHeading
+        eyebrow={groups.wellness.eyebrow}
+        title={groups.wellness.title}
+        lead={groups.wellness.description}
+        tone="wellness"
+        id="wellness-heading"
+      />
+      <ServiceList services={servicesByGroup('wellness')} />
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .services-group {
+    display: grid;
+  }
+
+  @media (min-width: 64em) {
+    .services-group {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .services-group > :global(.section-heading) {
+      position: sticky;
+      top: calc(var(--header-h) + 2rem);
+    }
+  }
+
+  .services-also {
+    margin-top: 1.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .services-also a {
+    color: var(--navy-800);
+    font-weight: 600;
+  }
+</style>

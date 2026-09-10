@@ -1,0 +1,416 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/mintirho-logo.png';
+import Icon from './Icon.astro';
+import MobileNav from './MobileNav.astro';
+import { primaryNav, isActive } from '../data/navigation';
+import { site, whatsappUrl } from '../data/site';
+
+const path = Astro.url.pathname;
+const normalise = (p: string) => (p.length > 1 ? p.replace(/\/$/, '') : p);
+const current = normalise(path);
+---
+
+<div class="utility">
+  <div class="container utility__inner">
+    <ul class="utility__links" role="list">
+      <li>
+        <a href={site.phones.office.href}>
+          <Icon name="phone" size={15} />
+          {site.phones.office.display}
+        </a>
+      </li>
+      <li>
+        <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+          <Icon name="message" size={15} />
+          WhatsApp {site.phones.mobile.display}
+          <span class="visually-hidden"> (opens in a new tab)</span>
+        </a>
+      </li>
+      <li>
+        <a href={`mailto:${site.emails.admin}`}>
+          <Icon name="mail" size={15} />
+          {site.emails.admin}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<header class="site-header" data-site-header>
+  <div class="container site-header__inner">
+    <a href="/" class="brand">
+      <Image
+        src={logo}
+        alt={`${site.name} home`}
+        width={134}
+        height={56}
+        densities={[1.5, 2, 2.75]}
+        format="webp"
+        quality={90}
+        loading="eager"
+      />
+    </a>
+
+    <nav class="primary-nav" aria-label="Main">
+      <ul role="list" class="primary-nav__list">
+        {primaryNav.map((item, index) =>
+          item.children ? (
+            <li class="dropdown" data-dropdown>
+              <button
+                type="button"
+                class:list={['nav-link', { 'is-active': isActive(item, path) }]}
+                aria-expanded="false"
+                aria-controls={`nav-panel-${index}`}
+                data-dropdown-trigger
+              >
+                {item.label}
+                <Icon name="chevron-down" size={16} class="nav-link__chevron" />
+              </button>
+              <div class="dropdown__panel" id={`nav-panel-${index}`} data-dropdown-panel>
+                <ul role="list">
+                  {item.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class="dropdown__link"
+                        aria-current={normalise(child.href) === current ? 'page' : undefined}
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                {item.overview && (
+                  <a href={item.overview.href} class="dropdown__overview">
+                    {item.overview.label}
+                    <Icon name="arrow-right" size={16} class="icon-arrow" />
+                  </a>
+                )}
+              </div>
+            </li>
+          ) : (
+            <li>
+              <a
+                href={item.href}
+                class:list={['nav-link', { 'is-active': isActive(item, path) }]}
+                aria-current={isActive(item, path) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ),
+        )}
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a
+        class="btn btn--soft btn--sm"
+        href={whatsappUrl()}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icon name="message" />
+        WhatsApp<span class="visually-hidden"> (opens in a new tab)</span>
+      </a>
+      <a class="btn btn--primary btn--sm" href="/contact">
+        Enquire
+      </a>
+    </div>
+
+    <button
+      type="button"
+      class="menu-button"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      data-menu-open
+    >
+      <Icon name="menu" size={24} />
+      <span class="visually-hidden">Open menu</span>
+    </button>
+  </div>
+</header>
+
+<MobileNav />
+
+<style>
+  /* Utility bar: desktop and tablet only, phones get these actions in the menu. */
+  .utility {
+    display: none;
+    background: var(--navy-950);
+    color: rgb(255 255 255 / 0.85);
+    font-size: 0.8125rem;
+    --color-focus: var(--white);
+  }
+
+  @media (min-width: 48em) {
+    .utility {
+      display: block;
+    }
+  }
+
+  .utility__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 2.5rem;
+  }
+
+  .utility__links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.5rem;
+  }
+
+  .utility__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding-block: 0.5rem;
+    text-decoration: none;
+  }
+
+  .utility__links a:hover {
+    color: var(--white);
+    text-decoration: underline;
+  }
+
+  /* Main header */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    background: rgb(255 255 255 / 0.97);
+    border-bottom: 1px solid transparent;
+    transition:
+      border-color var(--duration) var(--ease-out),
+      box-shadow var(--duration) var(--ease-out);
+  }
+
+  .site-header[data-scrolled] {
+    border-bottom-color: var(--color-border);
+    box-shadow: var(--shadow-1);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    min-height: var(--header-h);
+  }
+
+  .brand {
+    flex: none;
+    display: block;
+    padding-block: 0.5rem;
+    border-radius: var(--radius-sm);
+  }
+
+  /* The wordmark's second line must stay legible, so the logo is kept generous. */
+  .brand img {
+    width: auto;
+    height: 3rem;
+  }
+
+  @media (min-width: 64em) {
+    .brand img {
+      height: 3.5rem;
+    }
+  }
+
+  /* Desktop navigation */
+  .primary-nav {
+    display: none;
+    margin-inline: auto;
+  }
+
+  .site-header__actions {
+    display: none;
+    gap: 0.625rem;
+  }
+
+  @media (min-width: 64em) {
+    .primary-nav,
+    .site-header__actions {
+      display: flex;
+    }
+  }
+
+  .primary-nav__list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 0.875rem;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: none;
+    color: var(--slate-700);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color var(--duration) var(--ease-out);
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0.875rem;
+    right: 0.875rem;
+    bottom: 0.3rem;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--navy-800);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration) var(--ease-out);
+  }
+
+  .nav-link.is-active {
+    color: var(--navy-800);
+    font-weight: 600;
+  }
+
+  .nav-link.is-active::after {
+    transform: scaleX(1);
+  }
+
+  @media (hover: hover) {
+    .nav-link:hover {
+      color: var(--navy-800);
+    }
+  }
+
+  :global(.nav-link__chevron) {
+    transition: transform var(--duration) var(--ease-out);
+  }
+
+  [data-open] > .nav-link :global(.nav-link__chevron) {
+    transform: rotate(180deg);
+  }
+
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown__panel {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 50%;
+    z-index: var(--z-dropdown);
+    width: 17rem;
+    padding: 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--white);
+    box-shadow: var(--shadow-3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -4px);
+    transition:
+      opacity 150ms var(--ease-out),
+      transform 150ms var(--ease-out),
+      visibility 0s linear 150ms;
+  }
+
+  /* Bridge the gap so the pointer can travel from trigger to panel. */
+  .dropdown__panel::before {
+    content: '';
+    position: absolute;
+    inset: -0.75rem 0 auto;
+    height: 0.75rem;
+  }
+
+  .dropdown[data-open] .dropdown__panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+    transition-delay: 0s;
+  }
+
+  .dropdown__panel ul {
+    list-style: none;
+  }
+
+  .dropdown__link {
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.5rem 0.875rem;
+    border-radius: var(--radius-sm);
+    color: var(--slate-900);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .dropdown__link[aria-current='page'] {
+    background: var(--navy-50);
+    color: var(--navy-800);
+    font-weight: 600;
+  }
+
+  @media (hover: hover) {
+    .dropdown__link:hover {
+      background: var(--slate-100);
+    }
+  }
+
+  .dropdown__overview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 2.75rem;
+    margin-top: 0.375rem;
+    padding: 0.5rem 0.875rem;
+    border-top: 1px solid var(--color-border);
+    color: var(--navy-800);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .dropdown__overview:hover {
+    text-decoration: underline;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dropdown__panel,
+    .nav-link::after,
+    :global(.nav-link__chevron) {
+      transition: none;
+    }
+  }
+
+  /* Menu button (below desktop) */
+  .menu-button {
+    display: inline-grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    margin-left: auto;
+    margin-right: -0.5rem;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: none;
+    color: var(--navy-800);
+    touch-action: manipulation;
+  }
+
+  @media (min-width: 64em) {
+    .menu-button {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,94 @@
+---
+import Icon from './Icon.astro';
+import { DotPattern } from '@/components/ui/dot-pattern';
+import { site, whatsappUrl } from '../data/site';
+
+interface Props {
+  title?: string;
+  text?: string;
+  topic?: string;
+}
+
+const {
+  title = 'Talk to us about your workplace',
+  text = `Call, WhatsApp or send us an enquiry. We are open ${site.hours.display}.`,
+  topic,
+} = Astro.props;
+
+const contactHref = topic ? `/contact?topic=${topic}` : '/contact';
+---
+
+<section class="cta-band" aria-labelledby="cta-heading">
+  <DotPattern
+    width={22}
+    height={22}
+    cr={1.1}
+    className="fill-white/15 [mask-image:radial-gradient(640px_circle_at_85%_50%,white,transparent)]"
+  />
+  <div class="container cta-band__inner" data-reveal>
+    <div class="cta-band__copy">
+      <h2 id="cta-heading" class="heading-section">
+        {title}
+      </h2>
+      <p>{text}</p>
+    </div>
+    <div class="btn-row">
+      <a class="btn btn--light" href={contactHref}>
+        Send an enquiry
+        <Icon name="arrow-right" class="icon-arrow" />
+      </a>
+      <a class="btn btn--outline-light" href={site.phones.office.href}>
+        <Icon name="phone" />
+        {site.phones.office.display}
+      </a>
+      <a
+        class="btn btn--outline-light"
+        href={whatsappUrl()}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icon name="message" />
+        WhatsApp<span class="visually-hidden"> (opens in a new tab)</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    --color-focus: var(--white);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: clamp(3rem, 2rem + 4vw, 4.5rem);
+    background:
+      radial-gradient(700px 420px at 100% 0%, rgb(26 85 135 / 0.7), transparent 65%),
+      var(--navy-800);
+    color: rgb(255 255 255 / 0.85);
+  }
+
+  .cta-band__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 1.75rem;
+    align-items: center;
+  }
+
+  @media (min-width: 64em) {
+    .cta-band__inner {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 3rem;
+    }
+  }
+
+  .cta-band__copy {
+    display: grid;
+    gap: 0.75rem;
+    max-width: 38rem;
+  }
+
+  .cta-band h2 {
+    color: var(--white);
+  }
+</style>

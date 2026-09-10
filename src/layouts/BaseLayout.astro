@@ -1,0 +1,121 @@
+---
+import '../styles/tailwind.css';
+import '../styles/tokens.css';
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import { Font, getImage } from 'astro:assets';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import logo from '../assets/brand/mintirho-logo.png';
+import defaultShareImage from '../assets/photos/smoothie-bikes.jpg';
+import { site } from '../data/site';
+import { organizationSchema } from '../lib/schema';
+
+interface Props {
+  /** Page name; omitted on the homepage so the title is just the company name. */
+  title?: string;
+  description: string;
+  image?: ImageMetadata;
+  noindex?: boolean;
+}
+
+const { title, description, image = defaultShareImage, noindex = false } = Astro.props;
+
+const fullTitle = title ? `${title} | ${site.name}` : `${site.name} | Alberton, Gauteng`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const shareImage = await getImage({ src: image, width: 1200, format: 'jpg' });
+const logoImage = await getImage({ src: logo, format: 'png' });
+const schema = organizationSchema(new URL(logoImage.src, Astro.site).href);
+---
+
+<!doctype html>
+<html lang="en-ZA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#0b3a60" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/favicon.png" sizes="48x48" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="en_ZA" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(shareImage.src, Astro.site).href} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <Font cssVariable="--font-jakarta" preload />
+
+    <script is:inline>
+      // Pre-hide animated elements only when motion will run (see global.css).
+      // Must match MOTION_QUERY below: phones and reduced motion get no animation.
+      if (
+        window.matchMedia('(prefers-reduced-motion: no-preference) and (min-width: 48em)').matches
+      ) {
+        document.documentElement.classList.add('js-motion');
+      }
+    </script>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)}></script>
+    <ClientRouter />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <SiteHeader />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter />
+
+    <script>
+      import { initNavigation } from '../scripts/nav';
+      import { initForms } from '../scripts/form';
+
+      // Motion is a tablet and desktop enhancement. Phones skip GSAP entirely so
+      // content is instant and no animation code is downloaded or executed.
+      const MOTION_QUERY = '(prefers-reduced-motion: no-preference) and (min-width: 48em)';
+      const motionAllowed = () => window.matchMedia(MOTION_QUERY).matches;
+      const ANIMATED = '[data-hero-item], [data-hero-media], [data-reveal], [data-drift]';
+      let destroyMotion: (() => void) | undefined;
+
+      document.addEventListener('astro:page-load', () => {
+        initNavigation();
+        initForms();
+
+        if (motionAllowed() && document.querySelector(ANIMATED)) {
+          // GSAP is loaded on demand so it never blocks first render.
+          import('../scripts/motion')
+            .then((motion) => {
+              motion.initMotion();
+              destroyMotion = motion.destroyMotion;
+            })
+            .catch(() => document.documentElement.classList.add('motion-ready'));
+        } else {
+          document.documentElement.classList.add('motion-ready');
+        }
+      });
+
+      document.addEventListener('astro:before-swap', () => destroyMotion?.());
+
+      // The swapped-in document has fresh <html> attributes; restore the pre-hide.
+      document.addEventListener('astro:after-swap', () => {
+        if (motionAllowed()) document.documentElement.classList.add('js-motion');
+      });
+    </script>
+  </body>
+</html>
+
+<style>
+  main:focus {
+    outline: none;
+  }
+</style>

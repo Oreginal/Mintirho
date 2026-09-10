@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ContactDetails from '../components/ContactDetails.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+
+// Keyless Google Maps embed, pinned to the street address (the suite number is
+// left out so Google geocodes the building reliably).
+const mapAddress = `${site.address.street.replace('Suite 3, ', '')}, ${site.address.suburb}, ${site.address.city}, ${site.address.postalCode}`;
+const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(mapAddress)}&z=16&output=embed`;
+---
+
+<BaseLayout
+  title="Contact us"
+  description="Contact Mintirho Healthcare and Consulting Services in Alberton. Call (011) 021 2821, WhatsApp +27 81 049 8443 or email admin@mintirhohcs.co.za."
+>
+  <PageHero
+    crumbs={[{ name: 'Contact', path: '/contact' }]}
+    eyebrow="Contact"
+    title="Contact us"
+    lead={`Call, WhatsApp or email us, or send an enquiry using the form. We are open ${site.hours.display}.`}
+  />
+
+  <section class="section">
+    <div class="container contact-layout">
+      <div class="contact-layout__details" data-reveal>
+        <h2 class="heading-sub">Get in touch</h2>
+        <ContactDetails />
+      </div>
+      <div class="contact-layout__form">
+        <EnquiryForm />
+        <figure class="map">
+          <div class="map__frame">
+            <iframe
+              title={`Map showing ${site.name} at ${mapAddress}`}
+              src={mapEmbedUrl}
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <figcaption class="map__caption">
+            <span class="map__address">
+              <Icon name="pin" size={18} />
+              {site.addressLines[0]}, {site.addressLines[1]}
+            </span>
+            <a class="link-arrow" href={site.mapUrl} target="_blank" rel="noopener noreferrer">
+              Get directions
+              <Icon name="external" size={16} />
+              <span class="visually-hidden"> (opens Google Maps in a new tab)</span>
+            </a>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-layout {
+    display: grid;
+    gap: 3rem;
+  }
+
+  @media (min-width: 64em) {
+    .contact-layout {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: 4rem;
+      align-items: start;
+    }
+  }
+
+  .contact-layout__details {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .contact-layout__form {
+    display: grid;
+    gap: 2rem;
+  }
+
+  /* Map card, styled like the Stitch framed images. */
+  .map {
+    margin: 0;
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--white);
+    box-shadow: var(--shadow-photo);
+  }
+
+  .map__frame {
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+    background: var(--slate-100);
+  }
+
+  .map__frame iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .map__caption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    padding: 0.75rem 0.5rem 0;
+    font-size: var(--text-sm);
+  }
+
+  .map__address {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-heading);
+    font-weight: 600;
+  }
+
+  .map__address :global(svg) {
+    flex: none;
+    color: var(--ruby-600);
+  }
+</style>

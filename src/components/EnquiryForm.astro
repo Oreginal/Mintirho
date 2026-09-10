@@ -1,0 +1,336 @@
+---
+import Icon from './Icon.astro';
+import { contactTopics } from '../data/services';
+import { site, whatsappUrl, mailtoUrl } from '../data/site';
+
+interface Props {
+  defaultTopic?: string;
+  heading?: string;
+  intro?: string;
+  headingLevel?: 2 | 3;
+}
+
+const {
+  defaultTopic = 'general',
+  heading = 'Send us an enquiry',
+  intro,
+  headingLevel = 2,
+} = Astro.props;
+
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
+const Tag = headingLevel === 3 ? 'h3' : 'h2';
+---
+
+<div class="enquiry">
+  <Tag class="enquiry__title" id="enquiry-heading">
+    {heading}
+  </Tag>
+  {intro && <p class="enquiry__intro">{intro}</p>}
+
+  {accessKey ? (
+    <>
+      <form class="enquiry__form" data-enquiry-form novalidate aria-labelledby="enquiry-heading">
+        <input type="hidden" name="access_key" value={accessKey} />
+        <input type="hidden" name="from_name" value="Mintirho website" />
+        <input type="checkbox" name="botcheck" style="display: none" tabindex="-1" />
+
+        <div class="field">
+          <label for="enquiry-name">Full name</label>
+          <input
+            id="enquiry-name"
+            name="name"
+            type="text"
+            autocomplete="name"
+            required
+            data-label="your name"
+            aria-describedby="enquiry-name-error"
+          />
+          <p class="field__error" id="enquiry-name-error" />
+        </div>
+
+        <div class="field">
+          <label for="enquiry-organisation">
+            Organisation <span class="field__optional">(optional)</span>
+          </label>
+          <input
+            id="enquiry-organisation"
+            name="organisation"
+            type="text"
+            autocomplete="organization"
+          />
+        </div>
+
+        <div class="field">
+          <label for="enquiry-email">Email address</label>
+          <input
+            id="enquiry-email"
+            name="email"
+            type="email"
+            inputmode="email"
+            autocomplete="email"
+            required
+            data-label="your email address"
+            aria-describedby="enquiry-email-error"
+          />
+          <p class="field__error" id="enquiry-email-error" />
+        </div>
+
+        <div class="field">
+          <label for="enquiry-phone">
+            Phone number <span class="field__optional">(optional)</span>
+          </label>
+          <input
+            id="enquiry-phone"
+            name="phone"
+            type="tel"
+            inputmode="tel"
+            autocomplete="tel"
+            pattern="[0-9 +()]{9,20}"
+            data-label="your phone number"
+            aria-describedby="enquiry-phone-error"
+          />
+          <p class="field__error" id="enquiry-phone-error" />
+        </div>
+
+        <div class="field field--full">
+          <label for="enquiry-topic">What can we help with?</label>
+          <select
+            id="enquiry-topic"
+            name="topic"
+            required
+            data-label="a topic"
+            aria-describedby="enquiry-topic-error"
+          >
+            {contactTopics.map((topic) => (
+              <option value={topic.value} selected={topic.value === defaultTopic}>
+                {topic.label}
+              </option>
+            ))}
+          </select>
+          <p class="field__error" id="enquiry-topic-error" />
+        </div>
+
+        <div class="field field--full">
+          <label for="enquiry-message">Message</label>
+          <textarea
+            id="enquiry-message"
+            name="message"
+            rows="5"
+            required
+            minlength="10"
+            data-label="a message"
+            aria-describedby="enquiry-message-hint enquiry-message-error"
+          ></textarea>
+          <p class="field__hint" id="enquiry-message-hint">
+            For example, the number of employees, the service you need or a preferred date.
+          </p>
+          <p class="field__error" id="enquiry-message-error" />
+        </div>
+
+        <div class="enquiry__footer field--full">
+          <button type="submit" class="btn btn--primary" data-submit>
+            <span data-submit-label>Send enquiry</span>
+            <Icon name="arrow-right" class="icon-arrow" />
+          </button>
+          <p class="enquiry__status" data-form-status role="status" />
+        </div>
+      </form>
+
+      <div class="enquiry__success" data-form-success hidden tabindex="-1">
+        <p class="enquiry__success-title">Thank you, your enquiry has been sent.</p>
+        <p>
+          We will be in touch. For anything urgent, call us on{' '}
+          <a href={site.phones.office.href}>{site.phones.office.display}</a>.
+        </p>
+      </div>
+    </>
+  ) : (
+    <div class="enquiry__unavailable">
+      <p>
+        Our online enquiry form is not available at the moment. Please contact us directly and we
+        will help you.
+      </p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href={mailtoUrl(site.emails.admin, 'Website enquiry')}>
+          <Icon name="mail" />
+          Email us
+        </a>
+        <a class="btn btn--soft" href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+          <Icon name="message" />
+          WhatsApp<span class="visually-hidden"> (opens in a new tab)</span>
+        </a>
+      </div>
+    </div>
+  )}
+</div>
+
+<style>
+  .enquiry {
+    padding: clamp(1.5rem, 1rem + 2.5vw, 2.5rem);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    box-shadow: var(--shadow-1);
+  }
+
+  .enquiry__title {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  .enquiry__intro {
+    margin-top: 0.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .enquiry__form {
+    display: grid;
+    gap: 1.25rem 1rem;
+    margin-top: 1.75rem;
+  }
+
+  @media (min-width: 40em) {
+    .enquiry__form {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .field--full {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .field {
+    display: grid;
+    gap: 0.375rem;
+    align-content: start;
+  }
+
+  .field label {
+    color: var(--color-heading);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .field__optional {
+    color: var(--color-text-muted);
+    font-weight: 400;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+    color: var(--slate-900);
+    /* 16px prevents iOS from zooming into the field. */
+    font-size: 1rem;
+    line-height: 1.4;
+    transition:
+      border-color var(--duration) var(--ease-out),
+      box-shadow var(--duration) var(--ease-out);
+  }
+
+  .field textarea {
+    min-height: 8rem;
+    resize: vertical;
+  }
+
+  .field select {
+    appearance: none;
+    padding-right: 2.75rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-position: right 1rem center;
+    background-size: 1.125rem;
+    background-repeat: no-repeat;
+  }
+
+  .field input:focus-visible,
+  .field select:focus-visible,
+  .field textarea:focus-visible {
+    outline: none;
+    border-color: var(--navy-800);
+    box-shadow: 0 0 0 4px rgb(11 58 96 / 0.14);
+  }
+
+  .field [aria-invalid='true'] {
+    border-color: var(--ruby-600);
+  }
+
+  .field [aria-invalid='true']:focus-visible {
+    box-shadow: 0 0 0 4px rgb(208 43 55 / 0.14);
+  }
+
+  .field__hint {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .field__error {
+    color: var(--ruby-700);
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+
+  .field__error:empty {
+    display: none;
+  }
+
+  .enquiry__footer {
+    display: grid;
+    gap: 0.75rem;
+    justify-items: start;
+    margin-top: 0.25rem;
+  }
+
+  @media (max-width: 29.99em) {
+    .enquiry__footer .btn {
+      width: 100%;
+    }
+  }
+
+  .enquiry__status {
+    color: var(--ruby-700);
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+
+  .enquiry__status:empty {
+    display: none;
+  }
+
+  .enquiry__success {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding: 1.25rem 1.5rem;
+    border-left: 3px solid var(--emerald-700);
+    border-radius: var(--radius-sm);
+    background: var(--emerald-50);
+  }
+
+  .enquiry__success[hidden] {
+    display: none;
+  }
+
+  .enquiry__success-title {
+    color: var(--emerald-800);
+    font-weight: 700;
+  }
+
+  .enquiry__success a {
+    color: var(--navy-800);
+    font-weight: 600;
+  }
+
+  .enquiry__unavailable {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1rem;
+    color: var(--color-text-muted);
+  }
+</style>

@@ -1,0 +1,219 @@
+---
+/**
+ * Framed feature photo, following the Stitch design:
+ *   variant "card"     white padded card with an optional caption strip
+ *   variant "overlay"  rounded photo with an optional info panel over it
+ * Caption and overlay copy must be factual; never use invented stats or claims.
+ */
+import { Picture } from 'astro:assets';
+import Icon, { type IconName } from './Icon.astro';
+import type { MediaImage } from '../data/media';
+
+interface Props {
+  image: MediaImage;
+  variant?: 'card' | 'overlay';
+  /** CSS aspect ratio of the photo area, e.g. "4 / 3". */
+  aspect?: string;
+  /** CSS object position, to keep the subject in frame. */
+  position?: string;
+  widths?: number[];
+  sizes: string;
+  priority?: boolean;
+  drift?: boolean;
+  reveal?: boolean;
+  caption?: { icon?: IconName; text: string; badge?: string };
+  overlay?: { icon: IconName; title: string; text?: string; badge?: string };
+  class?: string;
+}
+
+const {
+  image,
+  variant = 'card',
+  aspect = '4 / 3',
+  position = '50% 50%',
+  widths = [480, 720, 960, 1376],
+  sizes,
+  priority = false,
+  drift = false,
+  reveal = false,
+  caption,
+  overlay,
+  class: className,
+} = Astro.props;
+---
+
+<figure
+  class:list={['photo', `photo--${variant}`, className]}
+  style={`--photo-aspect: ${aspect}; --photo-position: ${position};`}
+  data-reveal={reveal ? '' : undefined}
+>
+  <div class="photo__frame">
+    <Picture
+      src={image.src}
+      formats={['avif', 'webp']}
+      widths={widths}
+      sizes={sizes}
+      alt={image.alt}
+      priority={priority}
+      data-hero-media={priority ? '' : undefined}
+      data-drift={drift ? '' : undefined}
+    />
+    {overlay && (
+      <div class="photo__overlay">
+        <span class="photo__overlay-icon">
+          <Icon name={overlay.icon} size={20} />
+        </span>
+        <span class="photo__overlay-text">
+          <span class="photo__overlay-title">{overlay.title}</span>
+          {overlay.text && <span class="photo__overlay-sub">{overlay.text}</span>}
+        </span>
+        {overlay.badge && <span class="photo__badge photo__badge--amber">{overlay.badge}</span>}
+      </div>
+    )}
+  </div>
+  {caption && (
+    <figcaption class="photo__caption">
+      <span class="photo__caption-text">
+        {caption.icon && <Icon name={caption.icon} size={18} class="photo__caption-icon" />}
+        {caption.text}
+      </span>
+      {caption.badge && <span class="photo__badge">{caption.badge}</span>}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .photo {
+    margin: 0;
+  }
+
+  .photo--card {
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--white);
+    box-shadow: var(--shadow-photo);
+  }
+
+  .photo__frame {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: var(--photo-aspect);
+    border-radius: var(--radius-lg);
+    background: var(--slate-100);
+  }
+
+  .photo--overlay .photo__frame {
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-photo);
+  }
+
+  .photo__frame :global(picture),
+  .photo__frame :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .photo__frame :global(img) {
+    object-fit: cover;
+    object-position: var(--photo-position);
+  }
+
+  /* Caption strip (card variant) */
+  .photo__caption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    padding: 0.875rem 0.5rem 0.25rem;
+  }
+
+  .photo__caption-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-heading);
+    font-weight: 600;
+  }
+
+  .photo__caption-text :global(.photo__caption-icon) {
+    flex: none;
+    color: var(--ruby-600);
+  }
+
+  .photo__badge {
+    padding: 0.25rem 0.625rem;
+    border-radius: var(--radius-sm);
+    background: var(--emerald-50);
+    color: var(--emerald-700);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .photo__badge--amber {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  /* Info panel over the photo (overlay variant) */
+  .photo__overlay {
+    position: absolute;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-lg);
+    background: rgb(255 255 255 / 0.96);
+    box-shadow: var(--shadow-1);
+  }
+
+  @media (min-width: 40em) {
+    .photo__overlay {
+      left: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+    }
+  }
+
+  .photo__overlay-icon {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-pill);
+    background: var(--emerald-50);
+    color: var(--emerald-700);
+  }
+
+  .photo__overlay-text {
+    display: grid;
+    flex: 1;
+    min-width: 0;
+    line-height: 1.3;
+  }
+
+  .photo__overlay-title {
+    color: var(--color-heading);
+    font-weight: 700;
+  }
+
+  .photo__overlay-sub {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  @media (max-width: 29.99em) {
+    .photo__overlay .photo__badge {
+      display: none;
+    }
+  }
+</style>

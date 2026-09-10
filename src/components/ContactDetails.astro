@@ -1,0 +1,139 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+import { site, whatsappUrl, mailtoUrl } from '../data/site';
+
+interface Item {
+  icon: IconName;
+  label: string;
+  lines: string[];
+  href?: string;
+  external?: boolean;
+  externalLabel?: string;
+}
+
+const items: Item[] = [
+  {
+    icon: 'phone',
+    label: 'Call',
+    lines: [site.phones.office.display],
+    href: site.phones.office.href,
+  },
+  {
+    icon: 'message',
+    label: 'WhatsApp',
+    lines: [site.phones.mobile.display],
+    href: whatsappUrl(),
+    external: true,
+    externalLabel: '(opens WhatsApp in a new tab)',
+  },
+  {
+    icon: 'mail',
+    label: 'Email',
+    lines: [site.emails.admin],
+    href: mailtoUrl(site.emails.admin),
+  },
+  {
+    icon: 'mail',
+    label: 'IV Lounge bookings',
+    lines: [site.emails.ivLounge],
+    href: mailtoUrl(site.emails.ivLounge),
+  },
+  ...site.socials.map((social) => ({
+    icon: social.icon,
+    label: social.label,
+    lines: [social.handle],
+    href: social.href,
+    external: true,
+    externalLabel: '(opens ' + social.label + ' in a new tab)',
+  })),
+  {
+    icon: 'pin',
+    label: 'Visit us',
+    lines: [...site.addressLines],
+    href: site.mapUrl,
+    external: true,
+    externalLabel: '(opens Google Maps in a new tab)',
+  },
+  {
+    icon: 'clock',
+    label: 'Opening hours',
+    lines: [site.hours.display],
+  },
+];
+---
+
+<ul class="contact-list" role="list">
+  {items.map((item) => (
+    <li class="contact-list__item">
+      <span class="contact-list__icon">
+        <Icon name={item.icon} />
+      </span>
+      <div>
+        <p class="contact-list__label">{item.label}</p>
+        {item.href ? (
+          <a
+            class="contact-list__value"
+            href={item.href}
+            target={item.external ? '_blank' : undefined}
+            rel={item.external ? 'noopener noreferrer' : undefined}
+          >
+            {item.lines.map((line, i) => (i === 0 ? line : [<br />, line]))}
+            {item.external && <span class="visually-hidden"> {item.externalLabel}</span>}
+          </a>
+        ) : (
+          <p class="contact-list__value">{item.lines.join(', ')}</p>
+        )}
+      </div>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .contact-list {
+    list-style: none;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .contact-list__item {
+    display: grid;
+    grid-template-columns: 2.75rem 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .contact-list__icon {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius);
+    background: var(--navy-50);
+    color: var(--navy-800);
+  }
+
+  .contact-list__label {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+
+  .contact-list__value {
+    display: inline-block;
+    color: var(--color-heading);
+    font-weight: 600;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  a.contact-list__value {
+    text-decoration: none;
+    padding-block: 0.125rem;
+  }
+
+  a.contact-list__value:hover {
+    color: var(--navy-800);
+    text-decoration: underline;
+  }
+</style>

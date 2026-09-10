@@ -1,0 +1,73 @@
+---
+import { breadcrumbSchema, type Crumb } from '../lib/schema';
+
+interface Props {
+  /** Trail after Home; the last crumb is the current page. */
+  crumbs: Crumb[];
+}
+
+const trail: Crumb[] = [{ name: 'Home', path: '/' }, ...Astro.props.crumbs];
+---
+
+<nav aria-label="Breadcrumb" class="crumbs">
+  <ol role="list">
+    {trail.map((crumb, index) => (
+      <li>
+        {index === trail.length - 1 ? (
+          <span aria-current="page">{crumb.name}</span>
+        ) : (
+          <a href={crumb.path}>{crumb.name}</a>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(breadcrumbSchema(trail))}
+></script>
+<style>
+  .crumbs ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 0.625rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .crumbs li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  .crumbs li + li::before {
+    content: '';
+    width: 0.375rem;
+    height: 0.375rem;
+    border-top: 1.5px solid var(--slate-300);
+    border-right: 1.5px solid var(--slate-300);
+    transform: rotate(45deg);
+  }
+
+  .crumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    color: var(--slate-600);
+    text-decoration: none;
+  }
+
+  .crumbs a:hover {
+    color: var(--navy-800);
+    text-decoration: underline;
+  }
+
+  .crumbs [aria-current] {
+    color: var(--slate-900);
+    font-weight: 500;
+  }
+</style>

@@ -11,7 +11,7 @@ const normalise = (p: string) => (p.length > 1 ? p.replace(/\/$/, '') : p);
 const current = normalise(path);
 ---
 
-<div class="utility">
+<div class="utility" transition:persist transition:name="site-utility">
   <div class="container utility__inner">
     <ul class="utility__links" role="list">
       <li>
@@ -37,7 +37,7 @@ const current = normalise(path);
   </div>
 </div>
 
-<header class="site-header" data-site-header>
+<header class="site-header" data-site-header transition:persist transition:name="site-header">
   <div class="container site-header__inner">
     <a href="/" class="brand">
       <Image
@@ -63,6 +63,7 @@ const current = normalise(path);
                 aria-expanded="false"
                 aria-controls={`nav-panel-${index}`}
                 data-dropdown-trigger
+                data-nav-match={item.children.map((child) => normalise(child.href)).join(',')}
               >
                 {item.label}
                 <Icon name="chevron-down" size={16} class="nav-link__chevron" />

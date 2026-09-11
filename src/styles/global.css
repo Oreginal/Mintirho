@@ -423,6 +423,35 @@ button {
 }
 
 /*
+ * Page transitions (astro:transitions ClientRouter). The header and footer
+ * are transition:persist'd (see SiteHeader/SiteFooter) so they stay put
+ * instead of refading on every navigation; only the rest of the page
+ * crossfades and settles with a small upward drift.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: mintirho-fade-out 0.18s cubic-bezier(0.4, 0, 1, 1) both;
+  }
+
+  ::view-transition-new(root) {
+    animation: mintirho-fade-in 0.32s cubic-bezier(0, 0, 0.2, 1) both;
+  }
+}
+
+@keyframes mintirho-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes mintirho-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/*
  * Motion pre-hide. BaseLayout adds `js-motion` only when motion is allowed.
  * GSAP adds `motion-ready` and takes over; if it never loads, the fallback
  * animation reveals content after 2.5s so nothing stays hidden.

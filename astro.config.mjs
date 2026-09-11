@@ -9,7 +9,9 @@ export default defineConfig({
   // React renders shadcn components in src/components/ui to static HTML at build
   // time. No client JavaScript ships unless a component uses a client: directive.
   integrations: [sitemap(), react()],
-  prefetch: { prefetchAll: false, defaultStrategy: 'hover' },
+  // prefetchAll fetches every in-viewport/hovered link's HTML ahead of a click so
+  // in-page navigations feel instant instead of waiting on a cold fetch.
+  prefetch: { prefetchAll: true, defaultStrategy: 'viewport' },
   vite: {
     plugins: [tailwindcss()],
   },

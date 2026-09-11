@@ -23,3 +23,6 @@ reference/legacy-assets/
 Thumbs.db
 .vscode/*
 !.vscode/extensions.json
+
+# Local Netlify folder
+.netlify

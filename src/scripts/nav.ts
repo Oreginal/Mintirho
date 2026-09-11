@@ -217,6 +217,33 @@ function initScrolledState(signal: AbortSignal): void {
   );
 }
 
+const normalise = (p: string): string => (p.length > 1 ? p.replace(/\/$/, '') : p);
+
+/**
+ * The header persists across client-side navigations (transition:persist), so
+ * its "current page" highlighting is only ever rendered once. Re-derive it
+ * from the URL after every navigation instead.
+ */
+function updateActiveNav(): void {
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+  if (!header) return;
+  const current = normalise(location.pathname);
+
+  header.querySelectorAll<HTMLAnchorElement>('.nav-link[href], .dropdown__link').forEach((link) => {
+    const isCurrent = normalise(new URL(link.href).pathname) === current;
+    link.classList.toggle('is-active', isCurrent);
+    if (isCurrent) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
+
+  header.querySelectorAll<HTMLButtonElement>('[data-dropdown-trigger][data-nav-match]').forEach((trigger) => {
+    const isCurrent = (trigger.dataset.navMatch ?? '').split(',').includes(current);
+    trigger.classList.toggle('is-active', isCurrent);
+    if (isCurrent) trigger.setAttribute('aria-current', 'page');
+    else trigger.removeAttribute('aria-current');
+  });
+}
+
 let controller: AbortController | undefined;
 
 /** Safe to call on every page load; removes listeners from the previous page. */
@@ -225,6 +252,7 @@ export function initNavigation(): void {
   controller = new AbortController();
   const { signal } = controller;
 
+  updateActiveNav();
   document
     .querySelectorAll<HTMLElement>('[data-dropdown]')
     .forEach((root) => initDropdown(root, signal));

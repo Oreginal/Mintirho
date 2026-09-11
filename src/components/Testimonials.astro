@@ -23,6 +23,11 @@ const initials = (name: string) =>
     <div class="quotes">
       {testimonials.map((testimonial) => (
         <figure class="quote" data-reveal>
+          <span class="quote__rating" role="img" aria-label="5 out of 5 stars">
+            {Array.from({ length: 5 }).map(() => (
+              <Icon name="star" size={16} class="quote__star" />
+            ))}
+          </span>
           <span class="quote__mark" aria-hidden="true">
             &ldquo;
           </span>
@@ -81,6 +86,16 @@ const initials = (name: string) =>
     border-radius: var(--radius-xl);
     background: var(--white);
     box-shadow: var(--shadow-1);
+  }
+
+  .quote__rating {
+    display: flex;
+    gap: 0.125rem;
+  }
+
+  .quote__star {
+    color: #f5a623;
+    fill: currentColor;
   }
 
   .quote__mark {
